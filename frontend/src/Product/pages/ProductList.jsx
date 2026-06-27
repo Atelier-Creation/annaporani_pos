@@ -250,7 +250,7 @@ const ProductList = () => {
       pdf.setFont("helvetica", "normal");
       pdf.setTextColor(30);
       pdf.text(`Price : Rs.${product.selling_price ?? ""}`, x + 3, y + 28);
-      pdf.text(`Size  : ${product.size ?? ""}`, x + 3, y + 32);
+      pdf.text(`Portion: ${product.portion_size ?? ""}`, x + 3, y + 32);
       pdf.text(`Name : ${product.product_name ?? ""}`, x + 3, y + 36, { maxWidth: labelW - 4 });
     });
 

@@ -6,7 +6,8 @@ import CustomerBillingForm from "./pages/CustomerBillingForm";
 import CustomerBillCopy from "./pages/CustomerBillCopy";
 import SalesReport from "./pages/SalesReport";
 import SourceWiseReport from "./pages/SourceWiseReport";
-import { List, PlusCircle, UserPlus, BarChart, ShoppingCart } from "lucide-react";
+import POSPage from "./pages/POSPage";
+import { List, PlusCircle, UserPlus, BarChart, ShoppingCart, MonitorSmartphone } from "lucide-react";
 import ComingSoon from "./pages/ComingSoon";
 import { Tooltip } from "antd";
 export const billingMenuItems = [
@@ -19,6 +20,11 @@ export const billingMenuItems = [
     key: "/billing/add",
     label: "Add Billing",
     icon: <PlusCircle size={18} />,
+  },
+  {
+    key: "/billing/pos",
+    label: "POS Terminal",
+    icon: <MonitorSmartphone size={18} />,
   },
   {
     key: "/billing/self-checkout",
@@ -44,6 +50,7 @@ const BillingRoutes = () => {
     <Routes>
       <Route path="list" element={<BillingList />} />
       <Route path="add" element={<BillingForm />} />
+      <Route path="pos" element={<POSPage />} />
       <Route path="edit/:id" element={<BillingForm />} />
       <Route path="self-checkout" element={<ComingSoon />} />
       <Route path="customer-copy" element={<CustomerBillCopy />} />

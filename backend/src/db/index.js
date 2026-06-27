@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 //mysql://dutch:DutchDB123@167.71.229.209:3306/duch
-const sequelize = new Sequelize("mysql://dutch:DutchDB123@167.71.229.209:3306/demodutch", {
+const sequelize = new Sequelize("mysql://root:Head2ToePhy@168.144.158.134/annaporani", {
   dialect: "mysql",
   pool: {
     max: 10,

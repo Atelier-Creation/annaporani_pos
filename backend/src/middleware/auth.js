@@ -46,7 +46,7 @@ export const verifyToken = (req, res, next) => {
  *
  * The JWT payload must include a `permissions` array of permission codes.
  * The user is granted access if they have AT LEAST ONE of the required codes.
- * Super Admin (role_name === 'super_admin') bypasses all permission checks.
+ * Super Admin (role_name === 'super admin') bypasses all permission checks.
  *
  * @param {string[]} codes - Required permission codes (at least one must match)
  */
@@ -56,7 +56,7 @@ export const authorize = (codes = []) => (req, res, next) => {
     }
 
     // Super admin bypasses all permission checks
-    if (req.user.role_name === 'super_admin') {
+    if (req.user.role_name === 'super admin') {
         return next();
     }
 

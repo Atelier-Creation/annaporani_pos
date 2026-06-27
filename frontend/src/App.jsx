@@ -65,12 +65,12 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <EmployeeAuthProvider>
-        <BranchProvider>
-          <Loading duration={3000} />
-          <Suspense fallback={<div className="p-4"><Loading /></div>}>
-            <AppInner />
-          </Suspense>
-        </BranchProvider>
+          <BranchProvider>
+            <Loading duration={3000} />
+            <Suspense fallback={<div className="p-4"><Loading /></div>}>
+              <AppInner />
+            </Suspense>
+          </BranchProvider>
         </EmployeeAuthProvider>
       </AuthProvider>
     </BrowserRouter>
@@ -79,7 +79,8 @@ const App = () => {
 
 function AppInner() {
   const { user } = useAuth();
-  const isSuperAdmin = user?.role?.role_name === "super admin";
+  const userRoleName = (user?.role?.role_name || user?.role_name || '').toLowerCase();
+  const isSuperAdmin = userRoleName === 'super admin' || userRoleName === 'super admin';
   const modules = Object.entries(routeModules).map(([path, mod]) => {
     const match = path.match(/\.\/(.*?)\/AppRoutes\.jsx$/);
     const name = match?.[1];
@@ -182,93 +183,93 @@ function AppInner() {
       <Route path="/developer-login" element={<DeveloperLogin />} />
       <Route path="/developer/tickets" element={<DeveloperPortal />} />
 
-              {/* Employee portal — outside admin layout, uses its own layout */}
-              <Route
-                path="/employee-dashboard"
-                element={
-                  <ProtectedEmployeeRoute>
-                    <EmployeeLayout />
-                  </ProtectedEmployeeRoute>
-                }
-              >
-                <Route index element={<EmployeeOverview />} />
-                <Route path="attendance" element={<EmployeeAttendance />} />
-                <Route path="leaves" element={<EmployeeLeaves />} />
-                <Route path="balance" element={<EmployeeLeaveBalance />} />
-                <Route path="documents" element={<EmployeeDocuments />} />
-                <Route path="payslips" element={<EmployeePayslip />} />
-                <Route path="advance" element={<EmployeeAdvance />} />
-              </Route>
-              {/* Routes WITHOUT sidebar/header */}
-              <Route
-                path="/billing/customer-copy"
-                element={
-                  <ProtectedRoute>
-                    <CustomerBillCopy />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/billing/customer-copy/:id"
-                element={
-                  <ProtectedRoute>
-                    <CustomerBillCopy />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/billing/customer-add"
-                element={
-                  <ProtectedRoute>
-                    <CustomerBillForm />
-                  </ProtectedRoute>
-                }
-              />
+      {/* Employee portal — outside admin layout, uses its own layout */}
+      <Route
+        path="/employee-dashboard"
+        element={
+          <ProtectedEmployeeRoute>
+            <EmployeeLayout />
+          </ProtectedEmployeeRoute>
+        }
+      >
+        <Route index element={<EmployeeOverview />} />
+        <Route path="attendance" element={<EmployeeAttendance />} />
+        <Route path="leaves" element={<EmployeeLeaves />} />
+        <Route path="balance" element={<EmployeeLeaveBalance />} />
+        <Route path="documents" element={<EmployeeDocuments />} />
+        <Route path="payslips" element={<EmployeePayslip />} />
+        <Route path="advance" element={<EmployeeAdvance />} />
+      </Route>
+      {/* Routes WITHOUT sidebar/header */}
+      <Route
+        path="/billing/customer-copy"
+        element={
+          <ProtectedRoute>
+            <CustomerBillCopy />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/billing/customer-copy/:id"
+        element={
+          <ProtectedRoute>
+            <CustomerBillCopy />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/billing/customer-add"
+        element={
+          <ProtectedRoute>
+            <CustomerBillForm />
+          </ProtectedRoute>
+        }
+      />
 
-              {/* Routes WITH sidebar/header */}
-              <Route
-                element={
-                  <ProtectedRoute>
-                    <MainLayout menuItems={menuItems} />
-                  </ProtectedRoute>
-                }
-              >
-                {/* Default redirect */}
-                <Route path="/" element={<Navigate to={getDefaultRedirect()} replace />} />
+      {/* Routes WITH sidebar/header */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <MainLayout menuItems={menuItems} />
+          </ProtectedRoute>
+        }
+      >
+        {/* Default redirect */}
+        <Route path="/" element={<Navigate to={getDefaultRedirect()} replace />} />
 
-                {modules.map(({ name, path, element: Element }) => (
-                  <Route
-                    key={name}
-                    path={path}
-                    element={
-                      <ProtectedRoute>
-                        <Element />
-                      </ProtectedRoute>
-                    }
-                  />
-                ))}
-                <Route
-                  path="/employee-dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <EmployeeDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <ProtectedRoute>
-                      <Settings />
-                    </ProtectedRoute>
-                  }
-                />
+        {modules.map(({ name, path, element: Element }) => (
+          <Route
+            key={name}
+            path={path}
+            element={
+              <ProtectedRoute>
+                <Element />
+              </ProtectedRoute>
+            }
+          />
+        ))}
+        <Route
+          path="/employee-dashboard"
+          element={
+            <ProtectedRoute>
+              <EmployeeDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                  path="*"
-                  element={<div className="p-4 text-red-500">404 - Page Not Found</div>}
-                />
-              </Route>
+        <Route
+          path="*"
+          element={<div className="p-4 text-red-500">404 - Page Not Found</div>}
+        />
+      </Route>
     </Routes>
   );
 }

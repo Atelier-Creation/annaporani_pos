@@ -15,16 +15,23 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
         return <Navigate to="/" state={{ from: location }} replace />;
     }
 
-    // Check if user has role_name (might be undefined)
-    const userRole = user.role_name?.toLowerCase() || '';
+    // Support both flat (user.role_name) and nested (user.role.role_name) structures
+    const userRole = (user.role?.role_name || user.role_name || '').toLowerCase();
 
-    // Admin can access everything even if allowedRoles is set
-    if (userRole === 'admin' || userRole === 'super admin' || userRole === 'cluster admin' || userRole === 'branch admin') {
+    // Admin roles bypass all permission checks
+    if (
+        userRole === 'admin' ||
+        userRole === 'super admin' ||
+        userRole === 'super admin' ||
+        userRole === 'cluster admin' ||
+        userRole === 'branch admin'
+    ) {
         return children;
     }
 
-    // For non-admin users, check if their role is allowed
-    if (allowedRoles.length > 0 && (!user.role_name || !allowedRoles.includes(user.role_name))) {
+    // For non-admin users, check if their role is in allowedRoles
+    const resolvedRoleName = user.role?.role_name || user.role_name;
+    if (allowedRoles.length > 0 && (!resolvedRoleName || !allowedRoles.includes(resolvedRoleName))) {
         return <Navigate to="/unauthorized" replace />;
     }
 

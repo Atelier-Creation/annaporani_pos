@@ -1,4 +1,4 @@
-// ProductForm.jsx - Dress Shop Product Form
+// ProductForm.jsx - Dress Shop Product Form with DO Spaces Image Upload
 import React, { useEffect, useState } from "react";
 import {
   Steps,
@@ -14,8 +14,17 @@ import {
   Col,
   Divider,
   Grid,
+  Upload,
+  Progress,
 } from "antd";
-import { LeftOutlined, RightOutlined, CheckCircleTwoTone } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  RightOutlined,
+  CheckCircleTwoTone,
+  InboxOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import productService from "../services/productService";
 import categoryService from "../services/categoryService";
@@ -25,6 +34,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 const { Step } = Steps;
 const { useBreakpoint } = Grid;
+const { Dragger } = Upload;
 
 const STEP_COLORS = ["#FF7A7A", "#FFB86B", "#7BD389", "#6B9BD3"];
 
@@ -32,6 +42,176 @@ const isUUID = (v) =>
   typeof v === "string" &&
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v);
 
+/* ─── Image Uploader Component ─── */
+const ProductImageUploader = ({ value, onChange }) => {
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+
+  const handleFile = async (file) => {
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+    if (!allowed.includes(file.type)) {
+      message.error("Only JPG, PNG, WebP or GIF files allowed");
+      return false;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      message.error("Image must be smaller than 5 MB");
+      return false;
+    }
+
+    setUploading(true);
+    setUploadProgress(0);
+
+    // Show local preview immediately
+    const localUrl = URL.createObjectURL(file);
+    onChange?.(localUrl);
+
+    try {
+      // Simulate progress while uploading
+      const progressInterval = setInterval(() => {
+        setUploadProgress((p) => Math.min(p + 15, 85));
+      }, 200);
+
+      const res = await productService.uploadImage(file);
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      const cdnUrl = res.data?.image_url;
+      onChange?.(cdnUrl);
+      message.success("Image uploaded successfully ✅");
+    } catch (err) {
+      message.error(err?.response?.data?.error || "Upload failed");
+      onChange?.(undefined);
+    } finally {
+      setUploading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
+    }
+
+    return false; // prevent antd auto-upload
+  };
+
+  const handleRemove = (e) => {
+    e.stopPropagation();
+    onChange?.(undefined);
+  };
+
+  return (
+    <div>
+      {value ? (
+        /* ── Preview Mode ── */
+        <div
+          style={{
+            position: "relative",
+            border: "2px solid #e8e8e8",
+            borderRadius: 12,
+            overflow: "hidden",
+            background: "#fafafa",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={value}
+            alt="Product"
+            style={{
+              width: "100%",
+              maxHeight: 260,
+              objectFit: "contain",
+              padding: 8,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              display: "flex",
+              gap: 6,
+            }}
+          >
+            <Button
+              type="primary"
+              size="small"
+              icon={<EyeOutlined />}
+              onClick={(e) => { e.stopPropagation(); window.open(value, "_blank"); }}
+              style={{ borderRadius: 6 }}
+            >
+              View
+            </Button>
+            <Button
+              danger
+              size="small"
+              icon={<DeleteOutlined />}
+              onClick={handleRemove}
+              style={{ borderRadius: 6 }}
+            >
+              Remove
+            </Button>
+          </div>
+          {/* Re-upload trigger */}
+          <div style={{ padding: "8px 0", width: "100%" }}>
+            <Upload
+              accept="image/*"
+              showUploadList={false}
+              beforeUpload={handleFile}
+              disabled={uploading}
+            >
+              <Button size="small" type="link" style={{ width: "100%" }}>
+                Click to replace image
+              </Button>
+            </Upload>
+          </div>
+        </div>
+      ) : (
+        /* ── Upload Mode ── */
+        <Dragger
+          accept="image/*"
+          showUploadList={false}
+          beforeUpload={handleFile}
+          disabled={uploading}
+          style={{
+            borderRadius: 12,
+            border: `2px dashed ${dragOver ? "#4096ff" : "#d9d9d9"}`,
+            background: dragOver ? "#f0f5ff" : "#fafafa",
+            padding: "24px 16px",
+            transition: "all 0.2s",
+          }}
+          onDragEnter={() => setDragOver(true)}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={() => setDragOver(false)}
+        >
+          <p style={{ fontSize: 40, color: "#40a9ff", marginBottom: 8 }}>
+            <InboxOutlined />
+          </p>
+          <p style={{ fontWeight: 600, fontSize: 15, margin: 0 }}>
+            Click or drag image here
+          </p>
+          <p style={{ color: "#999", fontSize: 12, margin: "4px 0 0" }}>
+            JPG, PNG, WebP, GIF — max 5 MB
+          </p>
+        </Dragger>
+      )}
+
+      {uploading && (
+        <div style={{ marginTop: 8 }}>
+          <Progress
+            percent={uploadProgress}
+            status={uploadProgress < 100 ? "active" : "success"}
+            strokeColor={{ from: "#108ee9", to: "#87d068" }}
+            size="small"
+          />
+          <p style={{ color: "#888", fontSize: 12, textAlign: "center", margin: "4px 0 0" }}>
+            Uploading to DigitalOcean Spaces…
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ─── Main ProductForm ─── */
 const ProductForm = () => {
   const screens = useBreakpoint();
   const { id: routeId } = useParams() || {};
@@ -42,6 +222,7 @@ const ProductForm = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+
   // Fetch categories
   const fetchCategories = async () => {
     try {
@@ -88,16 +269,12 @@ const ProductForm = () => {
         category_id: data.category_id,
         sub_category_id: data.sub_category_id,
         brand: data.brand,
-        size: data.size,
-        color: data.color,
-        material: data.material,
-        style: data.style,
-        pattern: data.pattern,
-        sleeve_type: data.sleeve_type,
-        length: data.length,
-        occasion: data.occasion,
-        season: data.season,
-        gender: data.gender,
+        portion_size: data.portion_size,
+        dietary_preference: data.dietary_preference || "Veg",
+        shelf_life: data.shelf_life,
+        allergen_info: data.allergen_info,
+        temperature: data.temperature,
+        preparation_time: data.preparation_time,
         unit: data.unit,
         purchase_price: data.purchase_price,
         selling_price: data.selling_price,
@@ -130,7 +307,7 @@ const ProductForm = () => {
   // Validation groups for steps
   const stepFieldMap = [
     ["category_id", "product_name"],
-    ["size", "color"],
+    ["portion_size", "dietary_preference"],
     ["purchase_price", "selling_price", "mrp", "discount_percentage", "tax_percentage"],
     ["description", "care_instructions", "status"],
   ];
@@ -162,16 +339,12 @@ const ProductForm = () => {
       category_id: values.category_id != null ? String(values.category_id) : "",
       sub_category_id: values.sub_category_id != null ? String(values.sub_category_id) : undefined,
       brand: trim(values.brand ?? "") || undefined,
-      size: trim(values.size ?? "") || undefined,
-      color: trim(values.color ?? "") || undefined,
-      material: trim(values.material ?? "") || undefined,
-      style: trim(values.style ?? "") || undefined,
-      pattern: trim(values.pattern ?? "") || undefined,
-      sleeve_type: trim(values.sleeve_type ?? "") || undefined,
-      length: trim(values.length ?? "") || undefined,
-      occasion: trim(values.occasion ?? "") || undefined,
-      season: trim(values.season ?? "") || undefined,
-      gender: values.gender || undefined,
+      portion_size: trim(values.portion_size ?? "") || undefined,
+      dietary_preference: values.dietary_preference || undefined,
+      shelf_life: trim(values.shelf_life ?? "") || undefined,
+      allergen_info: trim(values.allergen_info ?? "") || undefined,
+      temperature: values.temperature || undefined,
+      preparation_time: trim(values.preparation_time ?? "") || undefined,
       unit: trim(values.unit ?? "piece"),
       purchase_price: toNumber(values.purchase_price) ?? 0,
       selling_price: toNumber(values.selling_price) ?? 0,
@@ -349,28 +522,57 @@ const ProductForm = () => {
         );
 
       case 1:
-        // Step 2: Dress Shop Attributes
+        // Step 2: Sweet/Snack Shop Attributes
         return (
-          <Card title="Attributes" bordered={false}>
+          <Card title="Sweet & Snack Attributes" bordered={false}>
             <Row gutter={16}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Size" name="size">
-                  <Select placeholder="Select size" allowClear size="large">
-                    <Option value="XS">XS</Option>
-                    <Option value="S">S</Option>
-                    <Option value="M">M</Option>
-                    <Option value="L">L</Option>
-                    <Option value="XL">XL</Option>
-                    <Option value="XXL">XXL</Option>
-                    <Option value="XXXL">XXXL</Option>
-                    <Option value="Free Size">Free Size</Option>
-                  </Select>
+                <Form.Item label="Portion Size" name="portion_size">
+                  <Input placeholder="e.g., 250g, 500g, 1kg, 1 cup, 1 piece" size="large" />
                 </Form.Item>
               </Col>
 
               <Col xs={24} sm={12}>
-                <Form.Item label="Color" name="color">
-                  <Input placeholder="e.g., Red, Blue, Black" size="large" />
+                <Form.Item label="Dietary Preference" name="dietary_preference">
+                  <Select placeholder="Select preference" allowClear size="large">
+                    <Option value="Veg">Veg</Option>
+                    <Option value="Non-Veg">Non-Veg</Option>
+                    <Option value="Vegan">Vegan</Option>
+                    <Option value="Eggless">Eggless</Option>
+                    <Option value="Sugar-Free">Sugar-Free</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col xs={24} sm={12}>
+                <Form.Item label="Shelf Life" name="shelf_life">
+                  <Input placeholder="e.g., 2 days, 1 week, 1 month" size="large" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Temperature" name="temperature">
+                  <Select placeholder="Select serving temp" allowClear size="large">
+                    <Option value="Hot">Hot</Option>
+                    <Option value="Cold">Cold</Option>
+                    <Option value="Room Temperature">Room Temperature</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col xs={24} sm={12}>
+                <Form.Item label="Preparation Time" name="preparation_time">
+                  <Input placeholder="e.g., 10 mins, Instant" size="large" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Allergen Info" name="allergen_info">
+                  <Input placeholder="e.g., Contains Nuts, Dairy, Gluten" size="large" />
                 </Form.Item>
               </Col>
             </Row>
@@ -378,9 +580,9 @@ const ProductForm = () => {
         );
 
       case 2:
-        // Step 3: Pricing
+        // Step 3: Pricing + Image
         return (
-          <Card title="Pricing Information" bordered={false}>
+          <Card title="Pricing & Image" bordered={false}>
             <Row gutter={16}>
               <Col xs={24} sm={12} md={8}>
                 <Form.Item
@@ -471,8 +673,17 @@ const ProductForm = () => {
               </Col>
             </Row>
 
-            <Form.Item label="Image URL" name="image_url">
-              <Input placeholder="Enter image URL (optional)" />
+            <Divider orientation="left" style={{ fontWeight: 600 }}>
+              📸 Product Image
+            </Divider>
+
+            {/* ── Image Upload ── */}
+            <Form.Item
+              name="image_url"
+              label={null}
+              style={{ marginBottom: 0 }}
+            >
+              <ProductImageUploader />
             </Form.Item>
           </Card>
         );
@@ -506,6 +717,7 @@ const ProductForm = () => {
 
   return (
     <div style={{ padding: 12, background: "#f0f2f5", minHeight: "100vh" }}>
+      {contextHolder}
       <Spin spinning={loading}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Card>
@@ -514,7 +726,7 @@ const ProductForm = () => {
                 <Steps direction={screens.md ? "vertical" : "horizontal"} current={current} onChange={(idx) => setCurrent(idx)} className="mb-6 md:mb-0">
                   <Step title={<StepIcon index={0} title="Basic" />} description={screens.md ? "Product info" : ""} />
                   <Step title={<StepIcon index={1} title="Attributes" />} description={screens.md ? "Dress details" : ""} />
-                  <Step title={<StepIcon index={2} title="Pricing" />} description={screens.md ? "Price & codes" : ""} />
+                  <Step title={<StepIcon index={2} title="Pricing" />} description={screens.md ? "Price & image" : ""} />
                   <Step title={<StepIcon index={3} title="Details" />} description={screens.md ? "Description" : ""} />
                 </Steps>
               </Col>

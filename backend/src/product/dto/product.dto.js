@@ -15,17 +15,14 @@ export const createProductSchema = z.object({
   sub_category_id: z.string().uuid("Subcategory ID must be a valid UUID").optional().nullable(),
   brand: z.string().max(50, "Brand cannot exceed 50 characters").optional(),
   
-  // Dress Shop Specific Fields
-  size: z.string().max(20, "Size cannot exceed 20 characters").optional(),
-  color: z.string().max(50, "Color cannot exceed 50 characters").optional(),
-  material: z.string().max(100, "Material cannot exceed 100 characters").optional(),
-  style: z.string().max(100, "Style cannot exceed 100 characters").optional(),
-  pattern: z.string().max(50, "Pattern cannot exceed 50 characters").optional(),
-  sleeve_type: z.string().max(50, "Sleeve type cannot exceed 50 characters").optional(),
-  length: z.string().max(50, "Length cannot exceed 50 characters").optional(),
-  occasion: z.string().max(100, "Occasion cannot exceed 100 characters").optional(),
-  season: z.string().max(50, "Season cannot exceed 50 characters").optional(),
-  gender: z.enum(['Women', 'Men', 'Girls', 'Boys', 'Unisex']).optional(),
+  // Sweet/Snack Shop Specific Fields
+  portion_size: z.string().max(50, "Portion size cannot exceed 50 characters").optional(),
+  dietary_preference: z.enum(['Veg', 'Non-Veg', 'Vegan', 'Eggless', 'Sugar-Free']).optional().default('Veg'),
+  shelf_life: z.string().max(50, "Shelf life cannot exceed 50 characters").optional(),
+  allergen_info: z.string().max(255, "Allergen info cannot exceed 255 characters").optional(),
+  temperature: z.enum(['Hot', 'Cold', 'Room Temperature']).optional(),
+  preparation_time: z.string().max(50, "Preparation time cannot exceed 50 characters").optional(),
+
   
   unit: z.string().max(20, "Unit cannot exceed 20 characters").optional().default('piece'),
   purchase_price: z

@@ -1,6 +1,7 @@
 // controllers/product.controller.js
 import productService from "../service/product.service.js";
 import { createProductSchema, updateProductSchema } from "../dto/product.dto.js";
+import { getCdnUrl } from "../../utils/spaces.js";
 
 const productController = {
   // ✅ Create Product
@@ -247,7 +248,30 @@ if (startsWith) filters.startsWith = startsWith;
       console.error('Bulk upload error:', err);
       return res.status(500).json({ error: err.message });
     }
-  }
+  },
+
+  // ✅ Upload Product Image to DigitalOcean Spaces
+  async uploadImage(req, res) {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      // multer-s3 stores file info in req.file
+      const imageUrl = getCdnUrl(req.file.location) || req.file.location;
+
+      return res.status(200).json({
+        message: 'Image uploaded successfully',
+        image_url: imageUrl,
+        key: req.file.key,
+        size: req.file.size,
+        mimetype: req.file.mimetype,
+      });
+    } catch (err) {
+      console.error('Image upload error:', err);
+      return res.status(500).json({ error: err.message || 'Image upload failed' });
+    }
+  },
 
 };
 

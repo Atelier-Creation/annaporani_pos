@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret';
-const REFRESH_SECRET = process.env.REFRESH_SECRET || 'your_refresh_secret';
+const JWT_SECRET = process.env.JWT_SECRET || '3540e43edf1f1ed4811552d2b0d5a9fd1b4b23b8b7f0c48c83c621ed103454a6';
+const REFRESH_SECRET = process.env.REFRESH_SECRET || '7d9f2e4b1c8a3f6e0d5b2a9c4e7f1d3b8a6c2e5f9d1b4a7c0e3f6b9d2e5a8c1';
 const EXPIRES_IN = '2h'; 
 const REFRESH_EXPIRES_IN = '7d'; 
 /*

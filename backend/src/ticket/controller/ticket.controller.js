@@ -4,7 +4,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 // Upload directory for ticket attachments
 const UPLOAD_DIR = path.join(__dirname, '../../../../public/uploads/tickets');
@@ -20,7 +20,7 @@ const ticketController = {
 
       // Handle uploaded files (multer)
       const attachments = (req.files || []).map(f => ({
-        url:  `/uploads/tickets/${f.filename}`,
+        url: `/uploads/tickets/${f.filename}`,
         name: f.originalname,
         type: f.mimetype,
         size: f.size,
@@ -66,7 +66,7 @@ const ticketController = {
     }
   },
 
-  // PUT /api/v1/tickets/:id/assign  — super_admin only
+  // PUT /api/v1/tickets/:id/assign  — super admin only
   async assign(req, res) {
     try {
       const ticket = await ticketService.assignTicket(req.params.id, req.body, req.user);
@@ -76,7 +76,7 @@ const ticketController = {
     }
   },
 
-  // PUT /api/v1/tickets/:id/status  — super_admin only
+  // PUT /api/v1/tickets/:id/status  — super admin only
   async updateStatus(req, res) {
     try {
       const ticket = await ticketService.updateStatus(req.params.id, req.body);
@@ -86,7 +86,7 @@ const ticketController = {
     }
   },
 
-  // ── Developer management (super_admin only) ───────────────────────────────
+  // ── Developer management (super admin only) ───────────────────────────────
   async getDevelopers(req, res) {
     try {
       const devs = await ticketService.getDevelopers();

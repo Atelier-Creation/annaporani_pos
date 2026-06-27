@@ -25,11 +25,11 @@ const ticketService = {
       title,
       description,
       ticket_type: ticket_type || 'bug',
-      priority:    priority    || 'medium',
-      status:      'open',
+      priority: priority || 'medium',
+      status: 'open',
       attachments: attachments || [],
-      raised_by:       user.id,
-      raised_by_name:  user.username,
+      raised_by: user.id,
+      raised_by_name: user.username,
       raised_by_email: user.email,
     });
 
@@ -41,11 +41,11 @@ const ticketService = {
     return ticket;
   },
 
-  // ── Get all tickets (super_admin sees all, others see own) ────────────────
+  // ── Get all tickets (super admin sees all, others see own) ────────────────
   async getTickets({ user, status, ticket_type, page = 1, limit = 20 } = {}) {
     const where = {};
     if (user.role_name !== 'super admin') where.raised_by = user.id;
-    if (status && status !== 'all')      where.status = status;
+    if (status && status !== 'all') where.status = status;
     if (ticket_type && ticket_type !== 'all') where.ticket_type = ticket_type;
 
     const { count, rows } = await Ticket.findAndCountAll({
@@ -64,7 +64,7 @@ const ticketService = {
     return t;
   },
 
-  // ── Assign to developer (super_admin only) ────────────────────────────────
+  // ── Assign to developer (super admin only) ────────────────────────────────
   async assignTicket(id, { developer_id, admin_notes }) {
     const ticket = await Ticket.findByPk(id);
     if (!ticket) throw new Error('Ticket not found');
@@ -73,12 +73,12 @@ const ticketService = {
     if (!dev) throw new Error('Developer not found');
 
     await ticket.update({
-      assigned_to:       dev.id,
-      assigned_to_name:  dev.name,
+      assigned_to: dev.id,
+      assigned_to_name: dev.name,
       assigned_to_email: dev.email,
-      assigned_at:       new Date(),
-      status:            'assigned',
-      admin_notes:       admin_notes || ticket.admin_notes,
+      assigned_at: new Date(),
+      status: 'assigned',
+      admin_notes: admin_notes || ticket.admin_notes,
     });
 
     // Send email to developer (non-blocking)
@@ -91,16 +91,16 @@ const ticketService = {
     return ticket;
   },
 
-  // ── Update status (super_admin only) ──────────────────────────────────────
+  // ── Update status (super admin only) ──────────────────────────────────────
   async updateStatus(id, { status, admin_notes, completion_note }) {
     const ticket = await Ticket.findByPk(id);
     if (!ticket) throw new Error('Ticket not found');
 
     const updates = { status };
-    if (admin_notes)     updates.admin_notes     = admin_notes;
+    if (admin_notes) updates.admin_notes = admin_notes;
     if (completion_note) updates.completion_note = completion_note;
     if (status === 'completed') updates.resolved_at = new Date();
-    if (status === 'approved')  updates.approved_at  = new Date();
+    if (status === 'approved') updates.approved_at = new Date();
 
     await ticket.update(updates);
     return ticket;
@@ -181,8 +181,10 @@ const ticketService = {
       Ticket.count({ where: { ...where, status: 'completed' } }),
       Ticket.count({ where: { ...where, status: 'approved' } }),
     ]);
-    return { open, assigned, in_progress, completed, approved,
-      total: open + assigned + in_progress + completed + approved };
+    return {
+      open, assigned, in_progress, completed, approved,
+      total: open + assigned + in_progress + completed + approved
+    };
   },
 };
 

@@ -28,56 +28,36 @@ const Product = sequelize.define("Product", {
         type: DataTypes.STRING(50),
         allowNull: true,
     },
-    // Dress Shop Specific Fields
-    size: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        comment: 'e.g., XS, S, M, L, XL, XXL, or numeric sizes'
-    },
-    color: {
+    // Sweet/Snack Shop Specific Fields
+    portion_size: {
         type: DataTypes.STRING(50),
         allowNull: true,
-        comment: 'Dress color'
+        comment: 'e.g., 250g, 500g, 1kg, 1 cup, 1 piece'
     },
-    material: {
-        type: DataTypes.STRING(100),
+    dietary_preference: {
+        type: DataTypes.ENUM('Veg', 'Non-Veg', 'Vegan', 'Eggless', 'Sugar-Free'),
         allowNull: true,
-        comment: 'e.g., Cotton, Silk, Polyester, Chiffon'
+        defaultValue: 'Veg'
     },
-    style: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        comment: 'e.g., Casual, Formal, Party Wear, Traditional'
-    },
-    pattern: {
+    shelf_life: {
         type: DataTypes.STRING(50),
         allowNull: true,
-        comment: 'e.g., Solid, Printed, Embroidered, Striped'
+        comment: 'e.g., 2 days, 1 week, 1 month'
     },
-    sleeve_type: {
+    allergen_info: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        comment: 'e.g., Contains Nuts, Dairy, Gluten'
+    },
+    temperature: {
+        type: DataTypes.ENUM('Hot', 'Cold', 'Room Temperature'),
+        allowNull: true,
+        comment: 'e.g., Hot (for tea/coffee), Cold (for milkshakes), Room Temperature'
+    },
+    preparation_time: {
         type: DataTypes.STRING(50),
         allowNull: true,
-        comment: 'e.g., Full Sleeve, Half Sleeve, Sleeveless'
-    },
-    length: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
-        comment: 'e.g., Mini, Midi, Maxi, Knee Length'
-    },
-    occasion: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        comment: 'e.g., Wedding, Party, Casual, Office Wear'
-    },
-    season: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
-        comment: 'e.g., Summer, Winter, All Season'
-    },
-    gender: {
-        type: DataTypes.ENUM('Women', 'Men', 'Girls', 'Boys', 'Unisex'),
-        allowNull: true,
-        defaultValue: 'Women'
+        comment: 'e.g., 10 mins, Instant'
     },
     unit: {
         type: DataTypes.STRING(20),

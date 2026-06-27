@@ -11,8 +11,8 @@ async function createOrUpdateAdmin() {
         console.log("Connecting securely to database...");
         await sequelize.authenticate();
 
-        // Find super_admin role
-        const superAdminRole = await Role.findOne({ where: { role_name: "super_admin" } });
+        // Find super admin role
+        const superAdminRole = await Role.findOne({ where: { role_name: "super admin" } });
 
         if (!superAdminRole) {
             console.error("Super admin role not found! Run seed-permissions.js first.");

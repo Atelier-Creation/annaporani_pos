@@ -76,7 +76,7 @@ async function seed() {
         console.log("Permissions seeded successfully.");
 
         // 2. Map default roles ensuring they exist
-        const superAdminRoleName = "super_admin";
+        const superAdminRoleName = "super admin";
         const adminRoleName = "admin";
 
         console.log(`\nEnsuring '${superAdminRoleName}' and '${adminRoleName}' roles exist...`);
