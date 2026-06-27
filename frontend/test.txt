@@ -1,0 +1,844 @@
+header:
+/* HeaderBar.jsx */
+import {
+  LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Dropdown, Menu, message } from 'antd';
+
+const HeaderBar = ({ collapsed, toggleCollapsed }) => {
+  const handleMenuClick = ({ key }) => {
+    if (key === 'logout') {
+      message.success('Logged out');
+    }
+  };
+
+  const userMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="profile" icon={<UserOutlined />}>
+        Profile
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} danger>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <div className="bg-gray-800 px-4 flex justify-between items-center shadow-lg h-16">
+      <button onClick={toggleCollapsed} className="text-2xl text-white hover:text-purple-300 transition-colors">
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </button>
+
+      <div className="flex items-center gap-4">
+        <Dropdown overlay={userMenu} placement="bottomRight" trigger={['click']}>
+          <UserOutlined className="cursor-pointer text-white hover:text-purple-300 text-3xl transition-colors" />
+        </Dropdown>
+      </div>
+    </div>
+  );
+};
+
+export default HeaderBar;
+
+sidenave:
+
+/* Sidebar.jsx */
+import { Menu } from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const Sidebar = ({ collapsed, menuItems }) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  return (
+    <div className="bg-white shadow-lg h-full">
+      {!collapsed ? (
+        <div className="h-16 flex justify-center items-center text-center text-xl font-bold border-b text-purple-700">
+          Business Suite
+        </div>
+      ) : (
+        <div className="h-16" />
+      )}
+
+      <Menu
+        mode="inline"
+        inlineCollapsed={collapsed}
+        selectedKeys={[pathname]}
+        defaultOpenKeys={menuItems.map((item) => item.key)}
+        items={menuItems}
+        onClick={({ key }) => navigate(key)}
+        className="pt-2"
+        style={{
+          '--antd-menu-item-selected-bg': '#f3e8ff', /* Light purple */
+          '--antd-menu-item-color': '#7c3aed', /* Purple */
+          '--antd-menu-item-active-bg': '#f3e8ff', /* Light purple */
+          '--antd-menu-item-selected-color': '#5b21b6', /* Dark purple */
+          '--antd-menu-item-hover-bg': '#f1f5f9', /* Light grey */
+        }}
+      />
+    </div>
+  );
+};
+
+export default Sidebar;
+
+
+
+footer:
+
+
+/* Footer.jsx */
+import { Layout } from 'antd';
+
+const { Footer } = Layout;
+
+const AppFooter = () => {
+  return (
+    <Footer className="bg-gray-800 text-white text-center py-2 shadow-inner">
+            <div className="flex justify-center gap-2">
+
+        <p className="text-sm">© 2025 Business Suite. All rights reserved.</p>
+          <a href="#" className="text-purple-300 hover:text-purple-100 transition-colors">Privacy Policy</a>
+          <a href="#" className="text-purple-300 hover:text-purple-100 transition-colors">Terms of Service</a>
+          <a href="#" className="text-purple-300 hover:text-purple-100 transition-colors">Contact Us</a>
+        </div>
+    </Footer>
+  );
+};
+
+export default AppFooter;
+
+
+
+
+layout:
+/* MainLayout.jsx */
+import { Layout, ConfigProvider } from "antd";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import HeaderBar from "./Header";
+import AppFooter from "./Footer";
+
+const { Sider, Content } = Layout;
+
+const MainLayout = ({ menuItems }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => setCollapsed(!collapsed);
+
+  // Custom Ant Design theme
+  const theme = {
+    token: {
+      colorPrimary: '#7c3aed',
+      colorLink: '#7c3aed',
+      colorLinkHover: '#5b21b6',
+      borderRadius: 6,
+    },
+    components: {
+      Menu: {
+        // Menu item customization
+        colorItemBg: 'transparent',
+        colorItemText: '#4b5563',
+        colorItemTextSelected: '#7c3aed',
+        colorItemBgSelected: '#f3e8ff',
+        colorItemTextHover: '#7c3aed',
+        colorItemBgHover: '#f9fafb',
+        itemSelectedColor: '#5b21b6',
+        itemHoverColor: '#7c3aed',
+        subMenuItemBg: 'transparent',
+      }
+    }
+  };
+
+  return (
+    <ConfigProvider theme={theme}>
+      <Layout className="min-h-screen">
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          width={240}
+          collapsedWidth={80}
+          className="shadow-lg overflow-hidden"
+          style={{
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 100,
+            backgroundColor: '#fff',
+          }}
+        >
+          <Sidebar collapsed={collapsed} menuItems={menuItems} />
+        </Sider>
+
+        <Layout
+          style={{
+            marginLeft: collapsed ? 80 : 240,
+            transition: 'margin-left 0.3s',
+            backgroundColor: '#f9fafb',
+          }}
+        >
+          <HeaderBar collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
+          <Content
+            style={{
+              padding: '1px',
+              backgroundColor: '#f9fafb',
+              minHeight: 'calc(100vh - 112px)',
+              overflow: 'auto',
+              position: 'relative',
+            }}
+          >
+            <div className="bg-white rounded-lg shadow p-6 min-h-full">
+              <Outlet />
+            </div>
+          </Content>
+          <AppFooter />
+        </Layout>
+      </Layout>
+    </ConfigProvider>
+  );
+};
+
+export default MainLayout;
+
+
+
+
+
+# Division API Documentation
+
+## Overview
+This document outlines the REST API endpoints for managing divisions in the Smart Stitch Monitoring System.
+
+## Base URL
+```
+http://localhost:3000/api/v1/company_ms/division
+```
+
+## Authentication
+All endpoints require JWT authentication (currently commented out in routes).
+Include the JWT token in the Authorization header:
+```
+Authorization: Bearer <your-jwt-token>
+```
+
+## Data Validation
+All requests are validated using Zod schemas. Invalid requests will return a 422 error with validation details.
+
+## Endpoints
+
+### 1. Create Division
+**POST /**
+
+Creates a new division.
+
+#### Request Body Schema
+```json
+{
+    "name": "string (2-100 chars)",
+    "head_of_division": "number (optional)",
+    "phone": "string (optional)",
+    "email": "string (valid email, optional)",
+    "status": "string",
+    "created_by": "number"
+}
+```
+
+#### Example Request
+```powershell
+$body = @{
+    name = "Manufacturing Division"
+    head_of_division = 1
+    phone = "+91-9876543210"
+    email = "manufacturing@ssms.com"
+    status = "Active"
+    created_by = 1
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/division" -Method Post -Body $body -ContentType "application/json"
+```
+
+#### Success Response (201 Created)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Manufacturing Division",
+        "head_of_division": 1,
+        "phone": "+91-9876543210",
+        "email": "manufacturing@ssms.com",
+        "status": "Active",
+        "is_active": true,
+        "created_at": "2025-05-25T10:30:00.000Z",
+        "updated_at": null,
+        "deleted_at": null,
+        "created_by": 1,
+        "updated_by": null,
+        "deleted_by": null
+    }
+}
+```
+
+### 2. List/Filter Divisions
+**GET /**
+
+Retrieves a list of divisions with pagination and filtering options.
+
+#### Query Parameters
+| Parameter   | Type    | Default | Description |
+|------------|---------|---------|-------------|
+| page       | number  | 1       | Page number |
+| limit      | number  | 10      | Items per page |
+| search     | string  | ""      | Search in name/email/phone |
+| sort_by    | string  | "created_at" | Field to sort by |
+| sort_order | string  | "desc"  | "asc" or "desc" |
+| status     | string  | null    | Filter by status |
+| from_date  | string  | null    | Start date (YYYY-MM-DD) |
+| to_date    | string  | null    | End date (YYYY-MM-DD) |
+| is_pdf     | boolean | false   | Export as PDF |
+| is_excel   | boolean | false   | Export as Excel |
+
+#### Example Requests
+
+1. List with pagination:
+```
+GET /api/v1/company_ms/division?page=1&limit=10
+```
+
+2. Search and filter:
+```
+GET /api/v1/company_ms/division?search=manufacturing&status=Active
+```
+
+3. Export to Excel:
+```
+GET /api/v1/company_ms/division?is_excel=true
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "divisions": [
+            {
+                "id": 1,
+                "name": "Manufacturing Division",
+                "head_of_division": 1,
+                "phone": "+91-9876543210",
+                "email": "manufacturing@ssms.com",
+                "status": "Active",
+                "is_active": true,
+                "created_at": "2025-05-25T10:30:00.000Z",
+                "updated_at": null,
+                "deleted_at": null,
+                "created_by": 1,
+                "updated_by": null,
+                "deleted_by": null
+            }
+        ],
+        "pagination": {
+            "total": 1,
+            "page": 1,
+            "limit": 10,
+            "totalPages": 1
+        }
+    }
+}
+```
+
+### 3. Get Division by ID
+**GET /:id**
+
+Retrieves a specific division by ID.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/division/1" -Method Get
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Manufacturing Division",
+        "head_of_division": 1,
+        "phone": "+91-9876543210",
+        "email": "manufacturing@ssms.com",
+        "status": "Active",
+        "is_active": true,
+        "created_at": "2025-05-25T10:30:00.000Z",
+        "updated_at": null,
+        "deleted_at": null,
+        "created_by": 1,
+        "updated_by": null,
+        "deleted_by": null
+    }
+}
+```
+
+### 4. Update Division
+**PUT /:id**
+
+Updates an existing division.
+
+#### Request Body Schema
+```json
+{
+    "name": "string (2-100 chars, optional)",
+    "head_of_division": "number (optional)",
+    "phone": "string (optional)",
+    "email": "string (valid email, optional)",
+    "status": "string (optional)",
+    "updated_by": "number"
+}
+```
+
+#### Example Request
+```powershell
+$body = @{
+    name = "Manufacturing & Operations"
+    status = "Active"
+    updated_by = 1
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/division/1" -Method Put -Body $body -ContentType "application/json"
+```
+
+### 5. Delete Division
+**DELETE /:id**
+
+Soft deletes a division.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/division/1" -Method Delete
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "is_active": false,
+        "deleted_at": "2025-05-25T12:30:00.000Z",
+        "deleted_by": 1
+    }
+}
+```
+
+### 6. Restore Division
+**PATCH /:id**
+
+Restores a soft-deleted division.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/division/1" -Method Patch
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "is_active": true,
+        "deleted_at": null,
+        "deleted_by": null,
+        "updated_at": "2025-05-25T13:30:00.000Z",
+        "updated_by": 1
+    }
+}
+```
+
+## Error Responses
+
+### Validation Error (422)
+```json
+{
+    "success": false,
+    "status": 422,
+    "message": "Validation failed",
+    "validationErrors": [
+        {
+            "path": "email",
+            "message": "Invalid email format"
+        }
+    ]
+}
+```
+
+### Not Found Error (404)
+```json
+{
+    "success": false,
+    "status": 404,
+    "message": "Division not found"
+}
+```
+
+### Server Error (500)
+```json
+{
+    "success": false,
+    "status": 500,
+    "message": "Internal Server Error"
+}
+```
+
+## File Export Formats
+
+### Excel Export
+- Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+- Filename: divisions_[timestamp].xlsx
+- Columns: ID, Name, Head of Division, Phone, Email, Status, Created At
+
+### PDF Export
+- Content-Type: application/pdf
+- Filename: divisions_[timestamp].pdf
+- Columns: ID, Name, Phone, Email, Status
+
+## Implementation Notes
+1. All dates are in ISO format and UTC timezone
+2. The `deleted_at` field indicates soft deletion
+3. File exports are temporarily stored and automatically cleaned up after sending
+4. Search functionality is case-insensitive
+5. JWT authentication is currently commented out but should be enabled in production
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Department API Documentation
+
+## Overview
+This Invoke-RestMethod -Uri "http://localhost:3000/apiGET /GET /GET /api/v1/company_ms/department?is_excel=Invoke-RestMethod -Uri "http://localhost:3000/api/v1Invoke-ResInvoke-RestMethod -Uri Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Patchhttp://localhost:3000/api/v1/company_ms/department/1" -Method DeleteMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Put -Body $body -ContentType "application/json"company_ms/department/1" -Method Getruepi/v1/company_ms/department?search=production&status=Activepi/v1/company_ms/department?page=1&limit=10v1/company_ms/department" -Method Post -Body $body -ContentType "application/json"ocument outlines the REST API endpoints for managing departments in the Smart Stitch Monitoring System.
+
+## Base URL
+```
+http://localhost:3000/api/v1/company_ms/department
+```
+
+## Authentication
+All endpoints require JWT authentication (currently commented out in routes).
+Include the JWT token in the Authorization header:
+```
+Authorization: Bearer <your-jwt-token>
+```
+
+## Data Validation
+All requests are validated using Zod schemas. Invalid requests will return a 422 error with validation details.
+
+## Endpoints
+
+### 1. Create Department
+**POST /**
+
+Creates a new department.
+
+#### Request Body Schema
+```json
+{
+    "name": "string (2-100 chars)",
+    "description": "string (optional)",
+    "head_of_department": "number (optional)",
+    "phone": "string",
+    "email": "string (valid email)",
+    "status": "string",
+    "created_by": "number"
+}
+```
+
+#### Example Request
+```powershell
+$body = @{
+    name = "Production Department"
+    description = "Main production floor operations"
+    head_of_department = 1
+    phone = "+91-9876543210"
+    email = "production@ssms.com"
+    status = "Active"
+    created_by = 1
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department" -Method Post -Body $body -ContentType "application/json"
+```
+
+#### Success Response (201 Created)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Production Department",
+        "description": "Main production floor operations",
+        "head_of_department": 1,
+        "phone": "+91-9876543210",
+        "email": "production@ssms.com",
+        "status": "Active",
+        "is_active": true,
+        "created_at": "2025-05-25T10:30:00.000Z",
+        "updated_at": null,
+        "deleted_at": null,
+        "created_by": 1,
+        "updated_by": null,
+        "deleted_by": null
+    }
+}
+```
+
+### 2. List/Filter Departments
+**GET /**
+
+Retrieves a list of departments with pagination and filtering options.
+
+#### Query Parameters
+| Parameter   | Type    | Default | Description |
+|------------|---------|---------|-------------|
+| page       | number  | 1       | Page number |
+| limit      | number  | 10      | Items per page |
+| search     | string  | ""      | Search in name/email/phone |
+| sort_by    | string  | "created_at" | Field to sort by |
+| sort_order | string  | "desc"  | "asc" or "desc" |
+| status     | string  | null    | Filter by status |
+| from_date  | string  | null    | Start date (YYYY-MM-DD) |
+| to_date    | string  | null    | End date (YYYY-MM-DD) |
+| is_pdf     | boolean | false   | Export as PDF |
+| is_excel   | boolean | false   | Export as Excel |
+
+#### Example Requests
+
+1. List with pagination:
+```
+GET /api/v1/company_ms/department?page=1&limit=10
+```
+
+2. Search and filter:
+```
+GET /api/v1/company_ms/department?search=production&status=Active
+```
+
+3. Export to Excel:
+```
+GET /api/v1/company_ms/department?is_excel=true
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "departments": [
+            {
+                "id": 1,
+                "name": "Production Department",
+                "description": "Main production floor operations",
+                "head_of_department": 1,
+                "phone": "+91-9876543210",
+                "email": "production@ssms.com",
+                "status": "Active",
+                "is_active": true,
+                "created_at": "2025-05-25T10:30:00.000Z",
+                "updated_at": null,
+                "deleted_at": null,
+                "created_by": 1,
+                "updated_by": null,
+                "deleted_by": null
+            }
+        ],
+        "pagination": {
+            "total": 1,
+            "page": 1,
+            "limit": 10,
+            "totalPages": 1
+        }
+    }
+}
+```
+
+### 3. Get Department by ID
+**GET /:id**
+
+Retrieves a specific department by ID.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Get
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Production Department",
+        "description": "Main production floor operations",
+        "head_of_department": 1,
+        "phone": "+91-9876543210",
+        "email": "production@ssms.com",
+        "status": "Active",
+        "is_active": true,
+        "created_at": "2025-05-25T10:30:00.000Z",
+        "updated_at": null,
+        "deleted_at": null,
+        "created_by": 1,
+        "updated_by": null,
+        "deleted_by": null
+    }
+}
+```
+
+### 4. Update Department
+**PUT /:id**
+
+Updates an existing department.
+
+#### Request Body Schema
+```json
+{
+    "name": "string (2-100 chars, optional)",
+    "description": "string (optional)",
+    "head_of_department": "number (optional)",
+    "phone": "string (optional)",
+    "email": "string (valid email, optional)",
+    "status": "string (optional)",
+    "updated_by": "number"
+}
+```
+
+#### Example Request
+```powershell
+$body = @{
+    name = "Production & Operations"
+    status = "Active"
+    updated_by = 1
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Put -Body $body -ContentType "application/json"
+```
+
+### 5. Delete Department
+**DELETE /:id**
+
+Soft deletes a department.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Delete
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "is_active": false,
+        "deleted_at": "2025-05-25T12:30:00.000Z",
+        "deleted_by": 1
+    }
+}
+```
+
+### 6. Restore Department
+**PATCH /:id**
+
+Restores a soft-deleted department.
+
+#### Example Request
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1/company_ms/department/1" -Method Patch
+```
+
+#### Success Response (200 OK)
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "is_active": true,
+        "deleted_at": null,
+        "deleted_by": null,
+        "updated_at": "2025-05-25T13:30:00.000Z",
+        "updated_by": 1
+    }
+}
+```
+
+## Error Responses
+
+### Validation Error (422)
+```json
+{
+    "success": false,
+    "status": 422,
+    "message": "Validation failed",
+    "validationErrors": [
+        {
+            "path": "email",
+            "message": "Invalid email format"
+        }
+    ]
+}
+```
+
+### Not Found Error (404)
+```json
+{
+    "success": false,
+    "status": 404,
+    "message": "Department not found"
+}
+```
+
+### Server Error (500)
+```json
+{
+    "success": false,
+    "status": 500,
+    "message": "Internal Server Error"
+}
+```
+
+## File Export Formats
+
+### Excel Export
+- Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+- Filename: departments_[timestamp].xlsx
+- Columns: ID, Name, Description, Head of Department, Phone, Email, Status, Created At
+
+### PDF Export
+- Content-Type: application/pdf
+- Filename: departments_[timestamp].pdf
+- Columns: ID, Name, Phone, Email, Status
+
+## Implementation Notes
+1. All dates are in ISO format and UTC timezone
+2. The `deleted_at` field indicates soft deletion
+3. File exports are temporarily stored and automatically cleaned up after sending
+4. Search functionality is case-insensitive
+5. JWT authentication is currently commented out but should be enabled in production

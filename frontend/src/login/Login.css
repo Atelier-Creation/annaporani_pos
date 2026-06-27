@@ -1,0 +1,318 @@
+/* Container for the whole login page */
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* For Microsoft Edge and Internet Explorer */
+.login-container input[type="password"]::-ms-reveal,
+.login-container input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* For some WebKit browsers (if needed) */
+.login-container input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+/* Left section for the logo 
+.login-left {
+    flex: 2.5;
+    background: radial-gradient(circle,#0057ff 15%,#6195ff 65%,#e3edff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 10px;
+}*/
+.login-left {
+    flex: 2.5;
+    background: #f5f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;       
+    overflow: hidden;
+}
+.left-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   
+}
+/* Welcome heading container */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+/* Welcome heading styling */
+.welcome-heading {
+    font-weight: bolder;
+    font-size: 36px;
+    color: #ffffff;
+    /* margin-bottom: 10px; */
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+/* 
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+} */
+
+.welcome-heading img {
+    width: 110px;
+    height: 90px;
+    object-fit: contain;
+}
+
+/* Tagline styling */
+.welcome-tagline {
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+/* Logo styling */
+.login-right .logo {
+    max-width: 40%;
+    height: auto;
+}
+
+/* Rest of your CSS remains unchanged */
+.login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(to right, #f7f8fa, #ffffff);
+    box-shadow: -15px 0 40px rgba(0,0,0,0.06);
+    border-left: 1px solid #eee;
+
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Login form container */
+.login-form {
+    max-width: 400px;
+    padding: 2rem;
+}
+
+/* Form header */
+.login-form h1, .login-form h3{
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+/* ONLY login heading style  */
+.login-title{
+    font-size:13px;      
+    font-weight:500;
+    color:#222;
+    text-align:center;
+    margin-bottom:18px;
+    text-transform:none; 
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* The input-wrapper holds the input, label, and icon */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #ffffff;
+    transition: border-color 0.3s;
+}
+
+.input-wrapper:focus-within {
+    border-color: #2f6fed;   
+    box-shadow: 0 0 0 2px rgba(47,111,237,0.15); /* optional glow */
+}
+
+/* Input field styling */
+.input-wrapper input {
+    width: 100%;
+    padding: 15px 10px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+}
+
+/* Floating label */
+.input-wrapper label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1a1a1a;  
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    background-color: white;
+    padding: 0 4px;
+    font-weight: 600;
+}
+
+/* When input is focused or has value, move label up */
+.input-wrapper input:focus + label,
+.input-wrapper input.filled + label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 1rem;
+     color: #2f6fed;  
+}
+
+/* Error styling */
+.form-group.error .input-wrapper {
+    border-color: #f44336;
+}
+
+.form-group.error label {
+    color: #f44336;
+}
+
+/* Input icon */
+.input-wrapper .toggle-icon {
+    position: absolute;
+    right: 12px;
+    color: #999;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.input-wrapper .input-icon-eye{
+    position: relative;
+    right: 0px;
+    color: #999;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Password toggle styling */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+}
+
+/* Error message below the input */
+.login-error-message {
+    color: #f44336;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    text-align: left;
+    font-weight: bolder;
+}
+
+/* Login button styling */
+.log-button {
+    width: 100%;
+    padding: 16px 12px;
+    background-color: #e0e0e0;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+/* Disabled button styling */
+.log-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.log-button:hover:not(:disabled) {
+    background-color: #374094;
+    color: white;
+}
+
+/* Forgot password link */
+.forgot-password {
+    margin-top: 1.5rem;
+    text-align: left;
+    font-weight: bolder;
+}
+
+.forgot-password a {
+    color: #2196F3;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Media query for tablets and mobile devices */
+@media screen and (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .login-left {
+        display: none; /* Hide the left container on mobile */
+    }
+
+    .login-right {
+        flex: 1;
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .login-right .logo {
+        max-width: 60%;
+        margin-top: 1rem;
+    }
+
+    .login-form {
+        padding: 1rem;
+    }
+}
+
+/* For very small screens */
+@media screen and (max-width: 480px) {
+    .welcome-heading {
+        font-size: 24px;
+    }
+
+    .welcome-tagline {
+        font-size: 28px;
+    }
+
+    .login-form h2 {
+        font-size: 1.2rem;
+    }
+}

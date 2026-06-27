@@ -1,0 +1,336 @@
+{
+  "sample_products": [
+    {
+      "product_name": "Floral Maxi Dress",
+      "product_code": "FMD001",
+      "brand": "Fashion Hub",
+      "size": "M",
+      "color": "Blue",
+      "material": "Cotton",
+      "style": "Casual",
+      "pattern": "Floral",
+      "sleeve_type": "Half Sleeve",
+      "length": "Maxi",
+      "occasion": "Casual",
+      "season": "Summer",
+      "gender": "Women",
+      "purchase_price": 500.00,
+      "selling_price": 1200.00,
+      "mrp": 1500.00,
+      "discount_percentage": 20.00,
+      "tax_percentage": 5.00,
+      "description": "Beautiful floral print maxi dress perfect for summer outings",
+      "care_instructions": "Machine wash cold, Do not bleach, Iron on low heat",
+      "barcode": "8901234567890",
+      "sku": "FMD-M-BLU-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Elegant Evening Gown",
+      "product_code": "EEG001",
+      "brand": "Glamour Collection",
+      "size": "L",
+      "color": "Black",
+      "material": "Silk",
+      "style": "Formal",
+      "pattern": "Solid",
+      "sleeve_type": "Sleeveless",
+      "length": "Floor Length",
+      "occasion": "Wedding",
+      "season": "All Season",
+      "gender": "Women",
+      "purchase_price": 2000.00,
+      "selling_price": 4500.00,
+      "mrp": 5500.00,
+      "discount_percentage": 18.00,
+      "tax_percentage": 12.00,
+      "description": "Elegant black evening gown perfect for weddings and formal events",
+      "care_instructions": "Dry clean only, Do not iron directly",
+      "barcode": "8901234567891",
+      "sku": "EEG-L-BLK-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Casual Cotton Kurti",
+      "product_code": "CCK001",
+      "brand": "Ethnic Wear",
+      "size": "XL",
+      "color": "Pink",
+      "material": "Cotton",
+      "style": "Traditional",
+      "pattern": "Printed",
+      "sleeve_type": "3/4 Sleeve",
+      "length": "Knee Length",
+      "occasion": "Daily Wear",
+      "season": "All Season",
+      "gender": "Women",
+      "purchase_price": 300.00,
+      "selling_price": 750.00,
+      "mrp": 999.00,
+      "discount_percentage": 25.00,
+      "tax_percentage": 5.00,
+      "description": "Comfortable cotton kurti for daily wear",
+      "care_instructions": "Machine wash, Iron on medium heat",
+      "barcode": "8901234567892",
+      "sku": "CCK-XL-PNK-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Party Wear Sequin Dress",
+      "product_code": "PWS001",
+      "brand": "Party Collection",
+      "size": "S",
+      "color": "Red",
+      "material": "Polyester",
+      "style": "Party Wear",
+      "pattern": "Embroidered",
+      "sleeve_type": "Full Sleeve",
+      "length": "Mini",
+      "occasion": "Party",
+      "season": "Winter",
+      "gender": "Women",
+      "purchase_price": 800.00,
+      "selling_price": 1800.00,
+      "mrp": 2200.00,
+      "discount_percentage": 18.00,
+      "tax_percentage": 12.00,
+      "description": "Stunning red sequin dress perfect for parties",
+      "care_instructions": "Hand wash only, Do not wring, Dry in shade",
+      "barcode": "8901234567893",
+      "sku": "PWS-S-RED-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Denim Jacket",
+      "product_code": "DNJ001",
+      "brand": "Urban Style",
+      "size": "M",
+      "color": "Blue",
+      "material": "Denim",
+      "style": "Casual",
+      "pattern": "Solid",
+      "sleeve_type": "Full Sleeve",
+      "length": "Hip Length",
+      "occasion": "Casual",
+      "season": "Winter",
+      "gender": "Unisex",
+      "purchase_price": 600.00,
+      "selling_price": 1400.00,
+      "mrp": 1799.00,
+      "discount_percentage": 22.00,
+      "tax_percentage": 12.00,
+      "description": "Classic denim jacket for casual wear",
+      "care_instructions": "Machine wash cold, Tumble dry low",
+      "barcode": "8901234567894",
+      "sku": "DNJ-M-BLU-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Formal Shirt",
+      "product_code": "FMS001",
+      "brand": "Office Wear",
+      "size": "40",
+      "color": "White",
+      "material": "Cotton Blend",
+      "style": "Formal",
+      "pattern": "Solid",
+      "sleeve_type": "Full Sleeve",
+      "length": "Regular",
+      "occasion": "Office Wear",
+      "season": "All Season",
+      "gender": "Men",
+      "purchase_price": 400.00,
+      "selling_price": 999.00,
+      "mrp": 1299.00,
+      "discount_percentage": 23.00,
+      "tax_percentage": 5.00,
+      "description": "Classic white formal shirt for office wear",
+      "care_instructions": "Machine wash, Iron on high heat",
+      "barcode": "8901234567895",
+      "sku": "FMS-40-WHT-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Kids Frock",
+      "product_code": "KDF001",
+      "brand": "Kids Fashion",
+      "size": "8-9 Years",
+      "color": "Yellow",
+      "material": "Cotton",
+      "style": "Casual",
+      "pattern": "Printed",
+      "sleeve_type": "Puff Sleeve",
+      "length": "Knee Length",
+      "occasion": "Party",
+      "season": "Summer",
+      "gender": "Girls",
+      "purchase_price": 250.00,
+      "selling_price": 599.00,
+      "mrp": 799.00,
+      "discount_percentage": 25.00,
+      "tax_percentage": 5.00,
+      "description": "Cute yellow frock for girls with puff sleeves",
+      "care_instructions": "Hand wash, Do not bleach",
+      "barcode": "8901234567896",
+      "sku": "KDF-8Y-YEL-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Chiffon Saree",
+      "product_code": "CHS001",
+      "brand": "Traditional Collection",
+      "size": "Free Size",
+      "color": "Maroon",
+      "material": "Chiffon",
+      "style": "Traditional",
+      "pattern": "Embroidered",
+      "sleeve_type": "N/A",
+      "length": "5.5 Meters",
+      "occasion": "Wedding",
+      "season": "All Season",
+      "gender": "Women",
+      "purchase_price": 1200.00,
+      "selling_price": 2999.00,
+      "mrp": 3999.00,
+      "discount_percentage": 25.00,
+      "tax_percentage": 5.00,
+      "description": "Beautiful maroon chiffon saree with embroidery work",
+      "care_instructions": "Dry clean only",
+      "barcode": "8901234567897",
+      "sku": "CHS-FS-MAR-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Striped T-Shirt",
+      "product_code": "STS001",
+      "brand": "Casual Wear",
+      "size": "L",
+      "color": "Multi-color",
+      "material": "Cotton",
+      "style": "Casual",
+      "pattern": "Striped",
+      "sleeve_type": "Half Sleeve",
+      "length": "Regular",
+      "occasion": "Casual",
+      "season": "Summer",
+      "gender": "Men",
+      "purchase_price": 200.00,
+      "selling_price": 499.00,
+      "mrp": 699.00,
+      "discount_percentage": 29.00,
+      "tax_percentage": 5.00,
+      "description": "Comfortable striped t-shirt for casual wear",
+      "care_instructions": "Machine wash, Do not bleach",
+      "barcode": "8901234567898",
+      "sku": "STS-L-MUL-001",
+      "status": "active"
+    },
+    {
+      "product_name": "Lehenga Choli",
+      "product_code": "LHC001",
+      "brand": "Bridal Collection",
+      "size": "M",
+      "color": "Red",
+      "material": "Silk Blend",
+      "style": "Traditional",
+      "pattern": "Embroidered",
+      "sleeve_type": "Sleeveless",
+      "length": "Floor Length",
+      "occasion": "Wedding",
+      "season": "All Season",
+      "gender": "Women",
+      "purchase_price": 3500.00,
+      "selling_price": 8999.00,
+      "mrp": 12999.00,
+      "discount_percentage": 31.00,
+      "tax_percentage": 12.00,
+      "description": "Stunning red lehenga choli with heavy embroidery work",
+      "care_instructions": "Dry clean only, Store in cool dry place",
+      "barcode": "8901234567899",
+      "sku": "LHC-M-RED-001",
+      "status": "active"
+    }
+  ],
+  
+  "sample_categories": [
+    {
+      "category_name": "Dresses",
+      "description": "All types of dresses for women"
+    },
+    {
+      "category_name": "Traditional Wear",
+      "description": "Ethnic and traditional clothing"
+    },
+    {
+      "category_name": "Casual Wear",
+      "description": "Comfortable casual clothing"
+    },
+    {
+      "category_name": "Formal Wear",
+      "description": "Professional and formal attire"
+    },
+    {
+      "category_name": "Party Wear",
+      "description": "Stylish party and evening wear"
+    },
+    {
+      "category_name": "Kids Wear",
+      "description": "Clothing for children"
+    },
+    {
+      "category_name": "Men's Wear",
+      "description": "Clothing for men"
+    }
+  ],
+  
+  "sample_subcategories": [
+    {
+      "category": "Dresses",
+      "subcategories": [
+        "Maxi Dresses",
+        "Midi Dresses",
+        "Mini Dresses",
+        "Evening Gowns",
+        "Casual Dresses"
+      ]
+    },
+    {
+      "category": "Traditional Wear",
+      "subcategories": [
+        "Sarees",
+        "Salwar Suits",
+        "Kurtis",
+        "Lehengas",
+        "Sherwanis"
+      ]
+    },
+    {
+      "category": "Casual Wear",
+      "subcategories": [
+        "T-Shirts",
+        "Jeans",
+        "Tops",
+        "Shorts",
+        "Jackets"
+      ]
+    }
+  ],
+  
+  "size_chart": {
+    "women": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+    "men": ["S", "M", "L", "XL", "XXL", "3XL", "38", "40", "42", "44"],
+    "kids": ["2-3 Years", "4-5 Years", "6-7 Years", "8-9 Years", "10-11 Years", "12-13 Years"]
+  },
+  
+  "color_options": [
+    "Red", "Blue", "Black", "White", "Pink", "Green", "Yellow", 
+    "Orange", "Purple", "Brown", "Grey", "Navy Blue", "Maroon",
+    "Beige", "Cream", "Gold", "Silver", "Multi-color"
+  ],
+  
+  "material_options": [
+    "Cotton", "Silk", "Polyester", "Chiffon", "Georgette", "Rayon",
+    "Linen", "Velvet", "Satin", "Denim", "Cotton Blend", "Silk Blend",
+    "Wool", "Lycra", "Net"
+  ]
+}
