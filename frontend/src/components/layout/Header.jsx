@@ -6,6 +6,8 @@ import {
   DownOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  DesktopOutlined,
+  BilibiliOutlined,
 } from "@ant-design/icons";
 import { Dropdown, message, Menu, Popover, Badge, List, Avatar } from "antd";
 import { useTheme } from "../../context/ThemeContext";
@@ -13,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import companyLogo from "../assets/Company_logo.png";
 import BranchSelector from "../BranchSelector";
+import { Receipt, ReceiptText } from "lucide-react";
+import { FaCartPlus } from "react-icons/fa";
 
 const HeaderBar = ({ collapsed, setCollapsed }) => {
   const { theme, headerBgColor, headerGradient } = useTheme();
@@ -126,6 +130,15 @@ const HeaderBar = ({ collapsed, setCollapsed }) => {
 
       {/* Right side: notifications + user */}
       <div className="flex items-center gap-2 sm:gap-6">
+        {/* POS Button */}
+        <button
+          onClick={() => navigate("/billing/pos")}
+          className="flex items-center gap-1.5 bg-[#506EE4] !text-white px-2 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-[#3f56c2] transition-all duration-200 active:scale-95 sm:text-sm sm:px-3.5 sm:py-2"
+        >
+          <FaCartPlus size={isMobile ? 12 : 14} />
+          <span>{isMobile ? "POS" : "POS"}</span>
+        </button>
+
         {/* Branch Selector */}
         <BranchSelector />
 

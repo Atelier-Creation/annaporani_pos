@@ -379,8 +379,8 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
               style={{
                 height: "100%",
                 width: collapsed && !isMobile ? 80 : isMobile ? 260 : 260, // Increased width for better spacing
-                backgroundColor: theme === "dark" ? "#1f2937" : sidebarBgColor,
-                borderRight: theme === "dark" ? "1px solid #374151" : "1px solid #e5e7eb",
+                backgroundColor: theme === "dark" ? "#fcfcfcff" : sidebarBgColor,
+                borderRight: theme === "dark" ? "1px solid #ffffffff" : "1px solid #e5e7eb",
                 display: "flex",
                 flexDirection: "column",
                 position: isMobile ? "fixed" : "relative",
@@ -402,7 +402,7 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
                 }}
               >
                 <img
-                  src={collapsed && !isMobile ? "/duch_small_logo.png" : "/duch_full_logo.jpeg"}
+                  src={collapsed && !isMobile ? "/colapslogo.png" : "/Company_logo.png"}
                   alt="DUCH CLOTHING"
                   className="transition-all duration-300 hover:scale-105"
                   style={{
@@ -411,7 +411,7 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
                     maxWidth: collapsed && !isMobile ? 48 : 200,
                     cursor: "pointer",
                     margin: collapsed && !isMobile ? "0 auto" : "0",
-                    background: "#000",
+                    background: "#fff",
                     borderRadius: 8,
                     padding: collapsed && !isMobile ? 4 : "6px 12px",
                     objectFit: "contain",

@@ -72,34 +72,34 @@ function statusMeta(status = "") {
 
 const cardStyles = {
   cardWrap: {
-    borderRadius: 12,
-    boxShadow: "0 6px 20px rgba(16,24,40,0.06)",
+    borderRadius: 10,
+    boxShadow: "0 4px 12px rgba(16,24,40,0.04)",
     overflow: "hidden",
     border: "1px solid #f1f5f9",
   },
   headerRow: {
     display: "flex",
-    gap: 12,
+    gap: 8,
     alignItems: "center",
     justifyContent: "space-between",
   },
-  leftMeta: { display: "flex", gap: 12, alignItems: "center" },
+  leftMeta: { display: "flex", gap: 8, alignItems: "center" },
   avatarSquare: (bg) => ({
     background: bg,
-    width: 48,
-    height: 48,
-    borderRadius: 10,
+    width: 36,
+    height: 36,
+    borderRadius: 8,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     color: "#fff",
     fontWeight: 700,
-    fontSize: 16,
+    fontSize: 13,
   }),
-  smallMeta: { color: "#6b7280", fontSize: 12 },
-  itemsRow: { display: "grid", gridTemplateColumns: "1fr auto", gap: 8, padding: "6px 0" },
-  footerRow: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12 },
-  totalText: { fontWeight: 700, fontSize: 16 },
+  smallMeta: { color: "#6b7280", fontSize: 11 },
+  itemsRow: { display: "grid", gridTemplateColumns: "1fr auto", gap: 6, padding: "4px 0" },
+  footerRow: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 },
+  totalText: { fontWeight: 700, fontSize: 14 },
 };
 
 function getTypeLabel(type = "") {
@@ -364,7 +364,7 @@ function BillingList() {
   ];
 
   const columns = [
-    { title: "Billing No", dataIndex: "billing_no", key: "billing_no", sorter: true },
+    { title: "Billing No", dataIndex: "billing_no", key: "billing_no", sorter: true, render: (val) => val ? val.replace("BILL-", "") : "" },
     { title: "Customer", dataIndex: "customer_name", key: "customer_name", sorter: true },
     {
       title: "Billing Date",
@@ -696,7 +696,7 @@ function BillingList() {
             <Empty description="No billings" />
           ) : (
             <List
-              grid={{ gutter: 18, xs: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
+              grid={{ gutter: 12, xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 5 }}
               dataSource={billings}
               renderItem={(item) => {
                 const initials = getInitials(item.customer_name);
@@ -705,47 +705,46 @@ function BillingList() {
                 const pmLabel = isSplit ? "Split" : (item.payment_method || "—").replace(/_/g, " ");
                 return (
                   <List.Item key={item.id}>
-                    <Card bodyStyle={{ padding: 16 }} style={cardStyles.cardWrap}>
+                    <Card bodyStyle={{ padding: 12 }} style={cardStyles.cardWrap}>
                       <div style={cardStyles.headerRow}>
                         <div style={cardStyles.leftMeta}>
                           <div style={cardStyles.avatarSquare("#0ea5a4")}>{initials}</div>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: 16, textTransform: "capitalize" }}>{item.customer_name}</div>
-                            <div style={cardStyles.smallMeta}><strong>Bill No:</strong> {item.billing_no}</div>
-                            {/* <div style={{fontSize: 10,opacity: 0.6}}>{new Date(item.billing_date).toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true })}</div> */}
+                            <div style={{ fontWeight: 700, fontSize: 14, textTransform: "capitalize", color: "#1f2937" }}>{item.customer_name}</div>
+                            <div style={{ ...cardStyles.smallMeta, fontSize: 9.5 }}><strong>Bill No:</strong> <span style={{ fontFamily: "monospace" }}>{item.billing_no ? item.billing_no.replace("BILL-", "") : ""}</span></div>
                             {/* Payment method below name */}
                             {isSplit ? (
                               <Tooltip title="Click to see split details">
                                 <div
                                   onClick={() => setSplitDetailBill(item)}
-                                  style={{ display: "inline-flex", alignItems: "center", gap: 3, background: "#fef3c7", color: "#92400e", padding: "2px 8px", borderRadius: 10, fontWeight: 700, fontSize: 10, cursor: "pointer", marginTop: 4 }}
+                                  style={{ display: "inline-flex", alignItems: "center", gap: 3, background: "#fef3c7", color: "#92400e", padding: "1px 6px", borderRadius: 10, fontWeight: 700, fontSize: 9, cursor: "pointer", marginTop: 2 }}
                                 >
                                   Split ▾
                                 </div>
                               </Tooltip>
                             ) : (
-                              <div style={{ display: "inline-block", background: "#eef2ff", color: "#3730a3", padding: "2px 8px", borderRadius: 10, fontWeight: 600, fontSize: 10, marginTop: 4 }}>
+                              <div style={{ display: "inline-block", background: "#eef2ff", color: "#3730a3", padding: "1px 6px", borderRadius: 10, fontWeight: 600, fontSize: 9, marginTop: 2 }}>
                                 {pmLabel}
                               </div>
                             )}
                           </div>
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "end", gap: 8 }}>
-                          <div style={{ background: sMeta.bg, color: sMeta.color, padding: "6px 10px", borderRadius: 16, fontWeight: 700, fontSize: 12 }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "end", gap: 4 }}>
+                          <div style={{ background: sMeta.bg, color: sMeta.color, padding: "4px 8px", borderRadius: 12, fontWeight: 700, fontSize: 10 }}>
                             {sMeta.label}
                           </div>
                           <div style={{ fontSize: 8, opacity: 0.6 }}>{new Date(item.billing_date).toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true })}</div>
                         </div>
                       </div>
 
-                      <Divider style={{ margin: "12px 0" }} />
+                      <Divider style={{ margin: "8px 0" }} />
 
-                      <div style={{ height: 90, overflowY: "auto", scrollbarWidth: "none", marginRight: -8, paddingRight: 8 }}>
+                      <div style={{ height: 60, overflowY: "auto", scrollbarWidth: "none", marginRight: -8, paddingRight: 8 }}>
                         {(item.items || []).map((it) => (
                           <div key={it.id || `${it.product?.product_code}-${Math.random()}`} style={cardStyles.itemsRow}>
-                            <div style={{ fontSize: 14, color: "#111827" }}>{it.product?.product_name || "–"}</div>
-                            <div style={{ textAlign: "right", color: "#374151" }}>
+                            <div style={{ fontSize: 12, color: "#374151" }}>{it.product?.product_name || "–"}</div>
+                            <div style={{ textAlign: "right", color: "#4b5563", fontSize: 12 }}>
                               {it.quantity} × ₹{it.unit_price}
                             </div>
                           </div>
@@ -753,40 +752,44 @@ function BillingList() {
                       </div>
 
                       <div style={cardStyles.footerRow}>
-                        <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+                        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                           <div>
-                            <div style={{ color: "#6b7280", fontSize: 11 }}>Total</div>
+                            <div style={{ color: "#6b7280", fontSize: 10 }}>Total</div>
                             <div style={cardStyles.totalText}>₹{item.total_amount}</div>
                           </div>
                           <div>
-                            <div style={{ color: "#6b7280", fontSize: 11 }}>Qty</div>
-                            <div style={{ fontWeight: 700, fontSize: 16, color: "#374151" }}>{item.total_quantity}</div>
+                            <div style={{ color: "#6b7280", fontSize: 10 }}>Qty</div>
+                            <div style={{ fontWeight: 700, fontSize: 14, color: "#374151" }}>{item.total_quantity}</div>
                           </div>
                         </div>
 
-                        <div style={{ display: "flex", gap: 8 }}>
+                        <div style={{ display: "flex", gap: 4 }}>
                           <Tooltip title="Quick view (opens live modal)">
                             <Button
                               type="default"
-                              icon={<EyeOutlined />}
+                              size="small"
+                              icon={<EyeOutlined style={{ fontSize: 11 }} />}
                               onClick={() => showDetails(item)}
-                              style={{ borderRadius: 8, padding: "6px 14px" }}
+                              style={{ borderRadius: 6, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}
                             />
                           </Tooltip>
 
-                          <Button type="primary" icon={<EditOutlined />} onClick={() => navigate(`/billing/edit/${item.id}`)} style={{ borderRadius: 8, padding: "6px 14px" }} />
+                          <Button 
+                            type="primary" 
+                            size="small" 
+                            icon={<EditOutlined style={{ fontSize: 11 }} />} 
+                            onClick={() => navigate(`/billing/edit/${item.id}`)} 
+                            style={{ borderRadius: 6, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }} 
+                          />
 
                           <Tooltip title="Print thermal receipt">
                             <Button
-                              icon={<PrinterOutlined />}
+                              size="small"
+                              icon={<PrinterOutlined style={{ fontSize: 11 }} />}
                               onClick={() => navigate(`/billing/customer-copy/${item.id}?print=1`)}
-                              style={{ borderRadius: 8, padding: "6px 14px" }}
+                              style={{ borderRadius: 6, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}
                             />
                           </Tooltip>
-
-                          {/* <Popconfirm title="Are you sure to delete this billing?" onConfirm={() => handleDelete(item.id)}>
-                            <Button danger icon={<DeleteOutlined />} style={{ borderRadius: 8, padding: "6px 14px" }} />
-                          </Popconfirm> */}
                         </div>
                       </div>
                     </Card>

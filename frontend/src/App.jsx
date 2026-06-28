@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import CustomerBillCopy from "./billing/pages/CustomerBillCopy";
 import CustomerBillForm from "./billing/pages/CustomerBillingForm";
+import POSPage from "./billing/pages/POSPage";
 import Login from "./login/Login";
 import EmployeeLogin from "./login/EmployeeLogin";
 import ProtectedRoute from "./context/ProtectedRoute";
@@ -222,6 +223,14 @@ function AppInner() {
         element={
           <ProtectedRoute>
             <CustomerBillForm />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/billing/pos"
+        element={
+          <ProtectedRoute>
+            <POSPage />
           </ProtectedRoute>
         }
       />

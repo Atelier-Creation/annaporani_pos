@@ -19,16 +19,15 @@ const Loading = ({ children, duration = 1000 }) => {
   if (isLoading) {
     return (
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-white/95 flex flex-col items-center justify-center backdrop-blur-sm transition-opacity duration-500 ease-in-out z-[9999] ${
-          fadeOut ? "opacity-0 pointer-events-none" : ""
-        }`}
+        className={`fixed top-0 left-0 w-full h-full bg-white/95 flex flex-col items-center justify-center backdrop-blur-sm transition-opacity duration-500 ease-in-out z-[9999] ${fadeOut ? "opacity-0 pointer-events-none" : ""
+          }`}
       >
         {/* Logo Image */}
 
-        <div className="bg-black rounded-2xl p-3 mb-5 shadow-lg">
+        <div className="bg-white rounded-2xl p-3 mb-5 shadow-lg">
           <img
-            src="/duch_full_logo.jpeg"
-            alt="DUCH CLOTHING"
+            src="/Company_logo.png"
+            alt="Company Logo"
             className="w-[100px] h-[100px] object-contain animate-fadeIn-float md:w-[80px] md:h-[80px] sm:w-[64px] sm:h-[64px]"
           />
         </div>

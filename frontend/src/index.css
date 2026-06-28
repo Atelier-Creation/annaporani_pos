@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -10,6 +11,14 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 /* Custom Scrollbar */
@@ -110,4 +119,10 @@ body {
   font-size:13px;
   color:#111827;
   font-weight:500;
+}
+
+/* POS Page Font Styles */
+.pos-page-font,
+.pos-page-font * {
+  font-family: 'Poppins', sans-serif !important;
 }

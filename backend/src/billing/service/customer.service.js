@@ -120,6 +120,13 @@ const customerService = {
     async getAllCustomers(filters = {}) {
         const where = { is_active: true };
 
+        if (filters.search) {
+            where[Op.or] = [
+                { customer_phone: { [Op.like]: `%${filters.search}%` } },
+                { customer_name: { [Op.like]: `%${filters.search}%` } }
+            ];
+        }
+
         if (filters.phone) {
             where.customer_phone = { [Op.like]: `%${filters.phone}%` };
         }
@@ -132,10 +139,16 @@ const customerService = {
             where.customer_email = { [Op.like]: `%${filters.email}%` };
         }
 
-        return await Customer.findAll({
+        const queryOptions = {
             where,
             order: [['createdAt', 'DESC']]
-        });
+        };
+
+        if (filters.limit) {
+            queryOptions.limit = parseInt(filters.limit) || 5;
+        }
+
+        return await Customer.findAll(queryOptions);
     },
 
     // Get customer by ID
