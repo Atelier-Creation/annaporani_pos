@@ -216,11 +216,11 @@ const ProductList = () => {
       pdf.setDrawColor(180);
       pdf.roundedRect(x, y, labelW, labelH, 2, 2);
 
-      // Header: Duch Clothing
+      // Header: ANNAPOORANI
       pdf.setFontSize(9);
       pdf.setFont("helvetica", "bold");
       pdf.setTextColor(30, 30, 30);
-      pdf.text("Duch Clothing", x + labelW / 2, y + 5, { align: "center" });
+      pdf.text("ANNAPOORANI", x + labelW / 2, y + 5, { align: "center" });
 
       // Divider line
       pdf.setDrawColor(200);

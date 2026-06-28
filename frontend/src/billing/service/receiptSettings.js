@@ -1,17 +1,16 @@
 export const RECEIPT_SETTINGS_KEY = "duchReceiptSettings";
 
 export const defaultReceiptSettings = {
-  storeName: "DUCH CLOTHING",
-  instagram: "duch clothing_",
-  cell1: "7010968189",
-  cell2: "8973418464",
+  storeName: "ANNAPOORANI",
+  instagram: "annapoorani_sweets",
+  cell1: "7010668139",
+  cell2: "89764718464",
   gstin: "33AYDPV1722F1ZO",
-  billTitle: "CASH BILL",
+  billTitle: "CUSTOMER COPY",
   footerTitle: "Terms & Conditions:",
   footerTerms: [
     "Goods once sold cannot be taken back.",
-    "Altered/Washed/Used Garments No Exchange.",
-    "Any Exchange 7days only.",
+    "Opened packet  No Exchange.",
     "No Cash Refund.",
     "Subject to Coimbatore Jurisdiction.",
   ].join("\n"),
@@ -39,7 +38,7 @@ export const getBranchDetails = (branches = [], selectedBranch) => {
 };
 
 export const getBranchAddressLines = (branch) => {
-  if (!branch) return ["No.27a, Thiruvasagam street,", "Near Prozone Mall, Coimbatore-641035."];
+  if (!branch) return ["Coimbatore, Tamil Nadu"];
 
   const lines = [];
   if (branch.address) {
@@ -50,7 +49,7 @@ export const getBranchAddressLines = (branch) => {
   if (cityLine) lines.push(cityLine);
   if (branch.phone) lines.push(`CELL: ${branch.phone}`);
 
-  return lines.length > 0 ? lines : [branch.branch_name || "DUCH CLOTHING"];
+  return lines.length > 0 ? lines : [branch.branch_name || "ANNAPOORANI"];
 };
 
 export const getReceiptProfile = ({ branches = [], selectedBranch, settings, branch: branchOverride } = {}) => {

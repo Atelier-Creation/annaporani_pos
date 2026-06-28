@@ -97,7 +97,7 @@ export const buildEscPosReceipt = (billing) => {
   const lines = [
     "\x1B\x40",
     "\x1B\x61\x01",
-    "\x1B\x45\x01" + clean(profile.storeName || "DUCH CLOTHING") + "\x1B\x45\x00",
+    "\x1B\x45\x01" + clean(profile.storeName || "ANNAPOORANI") + "\x1B\x45\x00",
   ];
 
   addressLines.forEach((line) => {

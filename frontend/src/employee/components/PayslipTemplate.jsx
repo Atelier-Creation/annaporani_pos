@@ -96,7 +96,7 @@ export default function PayslipTemplate({ data, printId = "payslip-print" }) {
                   />
                 </div>
                 <div>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: '#fff', letterSpacing: '0.5px' }}>DUCH CLOTHING</div>
+                  <div style={{ fontSize: 18, fontWeight: 900, color: '#fff', letterSpacing: '0.5px' }}>ANNAPOORANI</div>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)', marginTop: 3, lineHeight: 1.4 }}>
                     Saibaba Colony Branch, Raja Annamalai Road<br />
                     Saibaba Colony, Coimbatore, Tamil Nadu – 641011
@@ -339,7 +339,7 @@ export default function PayslipTemplate({ data, printId = "payslip-print" }) {
         {/* ══ FOOTER ══════════════════════════════════════════════════════════ */}
         <div style={{ paddingTop: 16, borderTop: '1px dashed #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ fontSize: 10, color: '#cbd5e1' }}>This is a system-generated payslip and does not require a signature.</div>
-          <div style={{ fontSize: 10, color: '#cbd5e1' }}>DUCH CLOTHING · Confidential</div>
+          <div style={{ fontSize: 10, color: '#cbd5e1' }}>ANNAPOORANI · Confidential</div>
         </div>
       </div>
     </div>

@@ -454,12 +454,12 @@ const Settings = () => {
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item label="Store Name" name="storeName">
-                      <Input placeholder="DUCH CLOTHING" />
+                      <Input placeholder="ANNAPOORANI" />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item label="Bill Title" name="billTitle">
-                      <Input placeholder="CASH BILL" />
+                      <Input placeholder="CUSTOMER COPY" />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -467,7 +467,7 @@ const Settings = () => {
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item label="Instagram ID" name="instagram">
-                      <Input placeholder="duch clothing_" />
+                      <Input placeholder="annapoorani_sweets" />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
@@ -480,12 +480,12 @@ const Settings = () => {
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item label="Cell Number 1" name="cell1">
-                      <Input placeholder="7010968189" />
+                      <Input placeholder="7010668139" />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item label="Cell Number 2" name="cell2">
-                      <Input placeholder="8973418464" />
+                      <Input placeholder="89764718464" />
                     </Form.Item>
                   </Col>
                 </Row>
