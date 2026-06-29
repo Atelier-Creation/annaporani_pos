@@ -21,7 +21,10 @@ const getStockImage = (categoryName, productName) => {
     const cat = (categoryName || "").toLowerCase();
     const prod = (productName || "").toLowerCase();
 
-    if (cat.includes("beverage") || prod.includes("coffee") || prod.includes("tea") || prod.includes("milk")) {
+    if (prod.includes("milk")) {
+        return "https://organicmandya.com/cdn/shop/articles/generated-image38.jpg?v=1782296041&width=1600";
+    }
+    if (cat.includes("beverage") || prod.includes("coffee") || prod.includes("tea")) {
         return "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=120&auto=format&fit=crop&q=60";
     }
     if (cat.includes("bakery") || prod.includes("bread") || prod.includes("bun") || prod.includes("cake")) {
