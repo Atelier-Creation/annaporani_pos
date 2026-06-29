@@ -58,16 +58,20 @@ const EmployeeHeader = ({ collapsed, setCollapsed }) => {
         borderBottom: theme === "dark" ? "1px solid #374151" : "1px solid #f3f4f6",
       }}
     >
-      <div
-        className="cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
-        onClick={() => setCollapsed(!collapsed)}
-        style={{ color: textColor }}
-      >
-        {collapsed
-          ? <MenuUnfoldOutlined style={{ fontSize: 20 }} />
-          : <MenuFoldOutlined style={{ fontSize: 20 }} />
-        }
-      </div>
+      {isMobile ? (
+        <div
+          className="cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          onClick={() => setCollapsed(!collapsed)}
+          style={{ color: textColor }}
+        >
+          {collapsed
+            ? <MenuUnfoldOutlined style={{ fontSize: 20 }} />
+            : <MenuFoldOutlined style={{ fontSize: 20 }} />
+          }
+        </div>
+      ) : (
+        <div />
+      )}
 
       <div className="flex items-center gap-4">
         {/* Employee badge */}

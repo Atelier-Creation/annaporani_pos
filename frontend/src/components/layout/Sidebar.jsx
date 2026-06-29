@@ -25,6 +25,24 @@ import {
 import { Popover, Tooltip } from "antd";
 import { FaWhatsapp } from "react-icons/fa";
 
+const PanelLeftIcon = ({ size = 20, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <rect width="18" height="18" x="3" y="3" rx="2" />
+    <path d="M9 3v18" />
+  </svg>
+);
+
 /**
  * Sidebar component
  * - Collapsed (desktop): parent icons centered; parents with children open a Popover flyout.
@@ -41,6 +59,7 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
   const { theme, primaryColor, sidebarBgColor } = useTheme();
   const [openMenu, setOpenMenu] = useState(null); // stores key of open inline menu OR open popover
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const containerRef = useRef(null);
 
   // Colors requested
@@ -79,7 +98,6 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
       icon: <IndianRupee size={20} />,
       children: [
         { key: "/billing/list", label: "Billing List", icon: <List size={18} /> },
-        { key: "/billing/add", label: "Add Billing", icon: <PlusCircle size={18} /> },
       ],
     },
     { key: "", label: "Self Checkout", icon: <PlusCircle size={20} />, noRoute: true },
@@ -389,37 +407,140 @@ const Sidebar = ({ collapsed = true, setCollapsed = () => { }, selectedParent, s
                 zIndex: 1601,
               }}
             >
-              {/* Top (Logo) */}
+              {/* Top (Logo / Sidebar Toggle) */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: collapsed && !isMobile ? "center" : "center",
-                  padding: collapsed && !isMobile ? "20px 0" : "16px 24px",
+                  justifyContent: "center",
+                  padding: collapsed && !isMobile ? 0 : "16px 0",
                   height: collapsed && !isMobile ? 80 : 88,
                   borderBottom: theme === "dark" ? "1px solid #374151" : "1px solid #f3f4f6",
                   marginBottom: 8,
+                  width: "100%",
                 }}
               >
-                <img
-                  src={collapsed && !isMobile ? "/colapslogo.png" : "/Company_logo.png"}
-                  alt="DUCH CLOTHING"
-                  className="transition-all duration-300 hover:scale-105"
-                  style={{
-                    height: collapsed && !isMobile ? 36 : 56,
-                    width: "auto",
-                    maxWidth: collapsed && !isMobile ? 48 : 200,
-                    cursor: "pointer",
-                    margin: collapsed && !isMobile ? "0 auto" : "0",
-                    background: "#fff",
-                    borderRadius: 8,
-                    padding: collapsed && !isMobile ? 4 : "6px 12px",
-                    objectFit: "contain",
-                  }}
-                  onClick={() => navigate("/dashboard")}
-                />
-
-
+                {collapsed && !isMobile ? (
+                  <div
+                    onMouseEnter={() => setIsLogoHovered(true)}
+                    onMouseLeave={() => setIsLogoHovered(false)}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {isLogoHovered ? (
+                      <Tooltip title="Open sidebar" placement="right">
+                        <button
+                          onClick={() => {
+                            setCollapsed(false);
+                            setIsLogoHovered(false);
+                          }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 42,
+                            height: 42,
+                            borderRadius: 8,
+                            border: "none",
+                            cursor: "pointer",
+                            backgroundColor: theme === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.05)",
+                            color: theme === "dark" ? "#D1D5DB" : "#4B5563",
+                            transition: "all 0.2s ease-in-out",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = theme === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.1)";
+                            e.currentTarget.style.color = theme === "dark" ? "#ffffff" : "#111827";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = theme === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.05)";
+                            e.currentTarget.style.color = theme === "dark" ? "#D1D5DB" : "#4B5563";
+                          }}
+                        >
+                          <PanelLeftIcon size={20} />
+                        </button>
+                      </Tooltip>
+                    ) : (
+                      <img
+                        src="/colapslogo.png"
+                        alt="DUCH CLOTHING"
+                        className="transition-all duration-300 hover:scale-105"
+                        style={{
+                          height: 36,
+                          width: "auto",
+                          maxWidth: 48,
+                          cursor: "pointer",
+                          background: "#fff",
+                          borderRadius: 8,
+                          padding: 4,
+                          objectFit: "contain",
+                        }}
+                        onClick={() => navigate("/dashboard")}
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: (!collapsed && !isMobile) ? "space-between" : "center",
+                      width: "100%",
+                      padding: (!collapsed && !isMobile) ? "0 12px 0 16px" : "0 24px",
+                    }}
+                  >
+                    <img
+                      src="/Company_logo.png"
+                      alt="DUCH CLOTHING"
+                      className="transition-all duration-300 hover:scale-102"
+                      style={{
+                        height: 56,
+                        width: "auto",
+                        maxWidth: (!collapsed && !isMobile) ? 160 : 200,
+                        cursor: "pointer",
+                        background: "#fff",
+                        borderRadius: 8,
+                        padding: "6px 12px",
+                        objectFit: "contain",
+                      }}
+                      onClick={() => navigate("/dashboard")}
+                    />
+                    {!collapsed && !isMobile && (
+                      <Tooltip title="Close sidebar" placement="bottom">
+                        <button
+                          onClick={() => setCollapsed(true)}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 40,
+                            height: 40,
+                            borderRadius: 8,
+                            border: "none",
+                            cursor: "pointer",
+                            backgroundColor: "transparent",
+                            color: theme === "dark" ? "#9CA3AF" : "#6B7280",
+                            transition: "all 0.2s ease-in-out",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = theme === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.05)";
+                            e.currentTarget.style.color = theme === "dark" ? "#ffffff" : "#111827";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.color = theme === "dark" ? "#9CA3AF" : "#6B7280";
+                          }}
+                        >
+                          <PanelLeftIcon size={20} />
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Menu items */}

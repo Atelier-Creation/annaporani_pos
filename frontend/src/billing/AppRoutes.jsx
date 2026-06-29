@@ -17,11 +17,6 @@ export const billingMenuItems = [
     icon: <List size={18} />,
   },
   {
-    key: "/billing/add",
-    label: "Add Billing",
-    icon: <PlusCircle size={18} />,
-  },
-  {
     key: "/billing/pos",
     label: "POS Terminal",
     icon: <MonitorSmartphone size={18} />,

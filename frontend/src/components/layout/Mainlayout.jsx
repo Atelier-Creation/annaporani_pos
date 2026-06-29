@@ -83,7 +83,6 @@ const MainLayout = ({ menuItems }) => {
       label: "Billing",
       children: [
         { key: "/billing/list", label: "Billing List" },
-        { key: "/billing/add", label: "Add Billing" },
       ],
     },
     {

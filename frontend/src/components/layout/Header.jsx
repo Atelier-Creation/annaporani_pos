@@ -116,17 +116,21 @@ const HeaderBar = ({ collapsed, setCollapsed }) => {
       }}
     >
       {/* Left side: Collapse Button */}
-      <div
-        className="cursor-pointer p-2 rounded-lg hover:bg-gray-100  transition-colors"
-        onClick={() => setCollapsed(!collapsed)}
-        style={{ color: textColor }}
-      >
-        {collapsed ? (
-          <MenuUnfoldOutlined style={{ fontSize: 20 }} />
-        ) : (
-          <MenuFoldOutlined style={{ fontSize: 20 }} />
-        )}
-      </div>
+      {isMobile ? (
+        <div
+          className="cursor-pointer p-2 rounded-lg hover:bg-gray-100  transition-colors"
+          onClick={() => setCollapsed(!collapsed)}
+          style={{ color: textColor }}
+        >
+          {collapsed ? (
+            <MenuUnfoldOutlined style={{ fontSize: 20 }} />
+          ) : (
+            <MenuFoldOutlined style={{ fontSize: 20 }} />
+          )}
+        </div>
+      ) : (
+        <div />
+      )}
 
       {/* Right side: notifications + user */}
       <div className="flex items-center gap-2 sm:gap-6">

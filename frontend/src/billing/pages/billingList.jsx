@@ -426,7 +426,7 @@ function BillingList() {
           <Tooltip title="Print thermal receipt">
             <Button icon={<PrinterOutlined />} onClick={() => navigate(`/billing/customer-copy/${record.id}?print=1`)} />
           </Tooltip>
-          <Button type="primary" icon={<EditOutlined />} onClick={() => navigate(`/billing/edit/${record.id}`)} />
+          <Button type="primary" icon={<EditOutlined />} onClick={() => navigate(`/billing/pos?edit=${record.id}`)} />
           {/* <Popconfirm title="Are you sure to delete this billing?" onConfirm={() => handleDelete(record.id)}>
             <Button danger icon={<DeleteOutlined />} />
           </Popconfirm> */}
@@ -497,7 +497,7 @@ function BillingList() {
           />
 
           <div className="flex gap-2">
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate("/billing/add")} className="flex-1 sm:flex-none">
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate("/billing/pos")} className="flex-1 sm:flex-none">
               Add
             </Button>
             <Button icon={<FilePdfOutlined />} onClick={exportPDF} className="flex-1 sm:flex-none">
@@ -778,7 +778,7 @@ function BillingList() {
                             type="primary" 
                             size="small" 
                             icon={<EditOutlined style={{ fontSize: 11 }} />} 
-                            onClick={() => navigate(`/billing/edit/${item.id}`)} 
+                            onClick={() => navigate(`/billing/pos?edit=${item.id}`)} 
                             style={{ borderRadius: 6, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }} 
                           />
 

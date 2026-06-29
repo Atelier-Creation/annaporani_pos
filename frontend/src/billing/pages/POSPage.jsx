@@ -195,7 +195,7 @@ export default function POSPage() {
         try {
             const payload = {
                 customer_name: customerName || "Walk-in Customer",
-                customer_phone: customerPhone || null,
+                customer_phone: customerPhone.trim() !== "" ? customerPhone : "9999999999",
                 type: "Casier Billing",
                 counter_no: "Counter 1",
                 billing_date: new Date().toISOString(),
@@ -411,10 +411,10 @@ export default function POSPage() {
                                     }}
                                     disabled={saving}
                                     className={`py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 active:scale-95 disabled:opacity-60 ${m === "cash"
-                                            ? "bg-green-600 !text-white hover:bg-green-700 shadow-sm"
-                                            : m === "split"
-                                                ? "bg-blue-600 !text-white hover:bg-blue-700 shadow-sm"
-                                                : "bg-purple-600 !text-white hover:bg-purple-700 shadow-sm"
+                                        ? "bg-green-600 !text-white hover:bg-green-700 shadow-sm"
+                                        : m === "split"
+                                            ? "bg-blue-600 !text-white hover:bg-blue-700 shadow-sm"
+                                            : "bg-purple-600 !text-white hover:bg-purple-700 shadow-sm"
                                         }`}
                                 >
                                     {m === "cash" ? "Cash" : m === "split" ? "Split" : "UPI"}
@@ -446,24 +446,41 @@ export default function POSPage() {
                             <div className="text-center py-10 text-gray-400">No items found</div>
                         ) : (
                             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
-                                {filteredItems.map(item => (
-                                    <div key={item.id} onClick={() => addToCart(item)}
-                                        className="bg-white border border-gray-200 rounded-xl p-3 flex flex-col cursor-pointer hover:border-[#506EE4] hover:shadow-md transition-all">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${typeColor(item.category_name)}`}>{item.category_name || "Item"}</span>
-                                            <img
-                                                src={item.image_url || getStockImage(item.category_name, item.product_name)}
-                                                alt={item.product_name}
-                                                className="w-10 h-10 object-cover rounded-md border border-gray-100"
-                                            />
+                                {filteredItems.map(item => {
+                                    const inCart = cart.some(c => c.id === item.id);
+                                    return (
+                                        <div key={item.id} onClick={() => addToCart(item)}
+                                            className={`border rounded-xl p-4 flex flex-col items-center cursor-pointer transition-all duration-200 relative ${inCart
+                                                    ? "bg-[#E6F7F0] border-[#10b981] shadow-[0_4px_12px_rgba(16,185,129,0.12)]"
+                                                    : "bg-white border-gray-200 hover:border-[#10b981] hover:shadow-[0_6px_16px_rgba(0,0,0,0.06)]"
+                                                }`}
+                                        >
+                                            {/* Category tag */}
+                                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium absolute top-3 left-3 ${typeColor(item.category_name)}`}>
+                                                {item.category_name || "Item"}
+                                            </span>
+
+                                            {/* Product Image Centered & Large Circular */}
+                                            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_4px_8px_rgba(0,0,0,0.06)] flex items-center justify-center mt-4 mb-3 bg-gray-50 shrink-0">
+                                                <img
+                                                    src={item.image_url || getStockImage(item.category_name, item.product_name)}
+                                                    alt={item.product_name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+
+                                            {/* Product Title & Info */}
+                                            <div className="flex flex-col items-center w-full text-center">
+                                                <h3 className="font-semibold text-gray-800 text-sm leading-tight line-clamp-2 !mb-0">
+                                                    {item.product_name}
+                                                </h3>
+                                                <span className="font-bold text-sm text-[#10b981] mt-1">
+                                                    {fmt(parseFloat(item.selling_price || item.unit_price))}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="mt-auto">
-                                            <p className="font-semibold text-gray-800 text-sm leading-tight">{item.product_name}</p>
-                                            <p className="text-xs text-gray-400 mt-0.5">{item.product_code}</p>
-                                            <p className="text-[#506EE4] font-bold mt-1">{fmt(parseFloat(item.selling_price || item.unit_price))}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
